@@ -278,11 +278,11 @@ export type Database = {
           description: string | null
           id: string
           is_ai_generated: boolean
-          mastered_cards: number | null
+          mastered_cards: number
           source_knowledge_id: string | null
           subject_id: string | null
           title: string
-          total_cards: number | null
+          total_cards: number
           updated_at: string | null
           user_id: string
         }
@@ -291,11 +291,11 @@ export type Database = {
           description?: string | null
           id?: string
           is_ai_generated?: boolean
-          mastered_cards?: number | null
+          mastered_cards?: number
           source_knowledge_id?: string | null
           subject_id?: string | null
           title: string
-          total_cards?: number | null
+          total_cards?: number
           updated_at?: string | null
           user_id: string
         }
@@ -304,11 +304,11 @@ export type Database = {
           description?: string | null
           id?: string
           is_ai_generated?: boolean
-          mastered_cards?: number | null
+          mastered_cards?: number
           source_knowledge_id?: string | null
           subject_id?: string | null
           title?: string
-          total_cards?: number | null
+          total_cards?: number
           updated_at?: string | null
           user_id?: string
         }
@@ -1499,7 +1499,7 @@ export type Database = {
           id: string
           options: Json | null
           order_index: number | null
-          points: number | null
+          points: number
           question: string
           question_type: string
           quiz_id: string
@@ -1511,7 +1511,7 @@ export type Database = {
           id?: string
           options?: Json | null
           order_index?: number | null
-          points?: number | null
+          points?: number
           question: string
           question_type?: string
           quiz_id: string
@@ -1523,7 +1523,7 @@ export type Database = {
           id?: string
           options?: Json | null
           order_index?: number | null
-          points?: number | null
+          points?: number
           question?: string
           question_type?: string
           quiz_id?: string
@@ -1548,7 +1548,7 @@ export type Database = {
           subject_id: string | null
           time_limit_minutes: number | null
           title: string
-          total_questions: number | null
+          total_questions: number
           updated_at: string | null
           user_id: string
         }
@@ -1561,7 +1561,7 @@ export type Database = {
           subject_id?: string | null
           time_limit_minutes?: number | null
           title: string
-          total_questions?: number | null
+          total_questions?: number
           updated_at?: string | null
           user_id: string
         }
@@ -1574,7 +1574,7 @@ export type Database = {
           subject_id?: string | null
           time_limit_minutes?: number | null
           title?: string
-          total_questions?: number | null
+          total_questions?: number
           updated_at?: string | null
           user_id?: string
         }
