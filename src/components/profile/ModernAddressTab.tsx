@@ -34,7 +34,7 @@ import { toast } from "sonner";
 import ManualAddressInput from "@/components/ManualAddressInput";
 import type { AddressData as GoogleAddressData } from "@/components/ManualAddressInput";
 import { AddressData, Address } from "@/types/address";
-import BobPayCheckoutHelper from "@/utils/bobpayCheckoutHelper";
+import { initializeBobPayCheckout } from "@/utils/bobpayCheckoutHelper";
 import PudoLocationsSection from "./BobGoLocationsSection";
 import SavedLockersCard from "./SavedLockersCard";
 
@@ -101,7 +101,7 @@ const ModernAddressTab = ({
           .single();
 
         if (!error && profile) {
-          setPreferredPickupMethod(profile.preferred_pickup_method);
+          setPreferredPickupMethod(profile.preferred_pickup_method as "locker" | "pickup");
           setHasSavedLocker(!!profile.preferred_delivery_locker_data);
 
           // Auto-select preference based on available options
@@ -247,9 +247,9 @@ const ModernAddressTab = ({
     try {
       await onSaveAddresses(pickupAddress, shippingAddress, sameAsPickup);
       setEditMode("none");
-    } catch (error) {
-      const formattedError = handleAddressError(error, "save");
-      console.error(formattedError.developerMessage, formattedError.originalError);
+    } catch (error: any) {
+      console.error("Address save error:", error?.message || error);
+      toast.error("Failed to save address");
     } finally {
       setIsSaving(false);
     }
@@ -303,9 +303,8 @@ const ModernAddressTab = ({
           wasSame ? emptyAddress : (shippingAddress || emptyAddress),
           false
         );
-      } catch (error) {
-        const formattedError = handleAddressError(error, "delete");
-        console.error(formattedError.developerMessage, formattedError.originalError);
+      } catch (error: any) {
+        console.error("Address delete error:", error?.message || error);
         // Restore the address if deletion fails
         if (addressData?.pickup_address) {
           setPickupAddress(addressData.pickup_address);
@@ -342,9 +341,8 @@ const ModernAddressTab = ({
           emptyAddress,
           false
         );
-      } catch (error) {
-        const formattedError = handleAddressError(error, "delete");
-        console.error(formattedError.developerMessage, formattedError.originalError);
+      } catch (error: any) {
+        console.error("Address delete error:", error?.message || error);
         // Restore the address if deletion fails
         if (addressData?.shipping_address) {
           setShippingAddress(addressData.shipping_address);

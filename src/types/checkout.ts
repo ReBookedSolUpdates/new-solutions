@@ -12,6 +12,10 @@ export interface CheckoutAddress {
   longitude?: number;
   phone?: string;
   additional_info?: string;
+  streetAddress?: string;
+  postalCode?: string;
+  zip?: string;
+  [key: string]: any;
 }
 
 export interface CheckoutBook {
@@ -28,6 +32,7 @@ export interface CheckoutBook {
   category?: string;
   itemType?: string;
   item_type?: string;
+  genre?: string;
   grade?: string;
   universityYear?: string;
   university?: string;
@@ -67,7 +72,7 @@ export interface DeliveryOption {
   price: number;
   estimated_days: number;
   description: string;
-  zone_type?: "local" | "provincial" | "national";
+  zone_type?: "local" | "provincial" | "national" | "locker";
   provider_name?: string;
   provider_slug?: string;
   service_level_code?: string;

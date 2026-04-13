@@ -403,7 +403,7 @@ const Step1point5DeliveryMethod: React.FC<Step1point5DeliveryMethodProps> = ({
                     setSelectedLocker(locker);
                     onSelectDeliveryMethod("locker", locker);
                   }}
-                  selectedLockerId={selectedLocker?.id}
+                  selectedLockerId={selectedLocker?.id != null ? String(selectedLocker.id) : undefined}
                   title="Select Pudo Locker"
                   description="Enter an address to find nearby Pudo lockers"
                   showCardLayout={false}

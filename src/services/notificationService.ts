@@ -36,8 +36,10 @@ export interface CreateNotificationData {
   type: string;
   title: string;
   message: string;
-  metadata?: Record<string, any>; // Will be ignored for now
-  priority?: 'high' | 'medium' | 'low'; // Will be ignored for now
+  metadata?: Record<string, any>;
+  priority?: 'high' | 'medium' | 'low';
+  read?: boolean;
+  [key: string]: any;
 }
 
 type Notification = {

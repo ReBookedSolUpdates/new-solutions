@@ -119,7 +119,7 @@ const PudoLocationsSection: React.FC<PudoLocationsSectionProps> = ({ onLockerSav
   // Save locker to profile
   const handleSaveLockerToProfile = async (location: BobGoLocation) => {
     try {
-      setSavingLockerId(location.id || "");
+      setSavingLockerId(String(location.id) || "");
 
       const {
         data: { user },
@@ -158,7 +158,7 @@ const PudoLocationsSection: React.FC<PudoLocationsSectionProps> = ({ onLockerSav
         .from("profiles")
         .update({
           preferred_delivery_locker_data: location,
-          preferred_pickup_locker_location_id: location.id ? parseInt(location.id) : null,
+          preferred_pickup_locker_location_id: location.id ? parseInt(String(location.id)) : null,
           preferred_pickup_locker_provider_slug: location.provider_slug || null,
           preferred_delivery_locker_saved_at: new Date().toISOString(),
         })

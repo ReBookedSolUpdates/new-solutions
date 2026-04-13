@@ -134,7 +134,7 @@ const PudoLockerSelector: React.FC<PudoLockerSelectorProps> = ({
   // Save locker to profile
   const handleSaveLockerToProfile = async (location: BobGoLocation) => {
     try {
-      setSavingLockerId(location.id || "");
+      setSavingLockerId(String(location.id) || "");
 
       const {
         data: { user },

@@ -82,8 +82,8 @@ const EnhancedOrderCommitButton: React.FC<EnhancedOrderCommitButtonProps> = ({
       }
 
       if (order) {
-        setPickupType(order.pickup_type || "door");
-        setDeliveryType(order.delivery_type || "door");
+        setPickupType((order.pickup_type || "door") as "door" | "locker");
+        setDeliveryType((order.delivery_type || "door") as "door" | "locker");
 
         // Check if seller still has an address (for door pickup)
         if (order.pickup_type === "door" || !order.pickup_type) {
