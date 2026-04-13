@@ -40,12 +40,16 @@ export interface Book {
   availableQuantity?: number;
   soldQuantity?: number;
   metadata?: BookMetadata;
+  publisher?: string;
+  language?: string;
   seller: {
     id: string;
     name: string;
     email: string;
     createdAt?: string;
+    full_name?: string;
   };
+  [key: string]: any;
 }
 
 export interface BookFormData {
@@ -60,7 +64,7 @@ export interface BookFormData {
   backCover?: string;
   insidePages?: string;
   additionalImages?: string[];
-  itemType: "textbook" | "reader";
+  itemType: "textbook" | "reader" | "uniform" | "school_supply";
   parcelSize?: 'extra_small' | 'small' | 'medium' | 'large' | 'extra_large';
   grade?: string;
   universityYear?: string;

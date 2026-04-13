@@ -65,12 +65,18 @@ const PROVINCE_ALIASES: Record<string, string> = {
 export interface CanonicalAddress {
   street: string;
   city: string;
-  province: string; // Full name (e.g., "Gauteng")
-  provinceCode?: string; // 2-letter code (e.g., "GP")
+  province: string;
+  provinceCode?: string;
   postalCode: string;
   country?: string;
   phone?: string;
   additionalInfo?: string;
+  suburb?: string;
+  latitude?: number;
+  longitude?: number;
+  type?: string;
+  streetAddress?: string;
+  [key: string]: any;
 }
 
 /**
