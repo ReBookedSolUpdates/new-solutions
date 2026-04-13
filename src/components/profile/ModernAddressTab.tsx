@@ -247,9 +247,9 @@ const ModernAddressTab = ({
     try {
       await onSaveAddresses(pickupAddress, shippingAddress, sameAsPickup);
       setEditMode("none");
-    } catch (error) {
-      const formattedError = handleAddressError(error, "save");
-      console.error(formattedError.developerMessage, formattedError.originalError);
+    } catch (error: any) {
+      console.error("Address save error:", error?.message || error);
+      toast.error("Failed to save address");
     } finally {
       setIsSaving(false);
     }
@@ -303,9 +303,8 @@ const ModernAddressTab = ({
           wasSame ? emptyAddress : (shippingAddress || emptyAddress),
           false
         );
-      } catch (error) {
-        const formattedError = handleAddressError(error, "delete");
-        console.error(formattedError.developerMessage, formattedError.originalError);
+      } catch (error: any) {
+        console.error("Address delete error:", error?.message || error);
         // Restore the address if deletion fails
         if (addressData?.pickup_address) {
           setPickupAddress(addressData.pickup_address);
@@ -342,9 +341,8 @@ const ModernAddressTab = ({
           emptyAddress,
           false
         );
-      } catch (error) {
-        const formattedError = handleAddressError(error, "delete");
-        console.error(formattedError.developerMessage, formattedError.originalError);
+      } catch (error: any) {
+        console.error("Address delete error:", error?.message || error);
         // Restore the address if deletion fails
         if (addressData?.shipping_address) {
           setShippingAddress(addressData.shipping_address);
