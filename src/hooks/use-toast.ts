@@ -6,6 +6,14 @@ interface ToastOptions {
   variant?: "default" | "destructive";
 }
 
+interface ToastEntry {
+  id: string;
+  title?: string;
+  description?: string;
+  action?: any;
+  [key: string]: any;
+}
+
 export function useToast() {
   const toast = ({ title, description, variant = "default" }: ToastOptions) => {
     if (variant === "destructive") {
@@ -19,5 +27,10 @@ export function useToast() {
     }
   };
 
-  return { toast };
+  // Provide empty toasts array for backward compatibility with Toaster component
+  const toasts: ToastEntry[] = [];
+
+  return { toast, toasts };
 }
+
+export const toast = sonnerToast;

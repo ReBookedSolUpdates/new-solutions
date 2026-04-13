@@ -314,7 +314,7 @@ const OrderCompletionCard: React.FC<OrderCompletionCardProps> = ({
                   .single();
 
                 const hasBankingDetails = !profileError &&
-                  sellerProfile?.preferences?.banking_setup_complete === true;
+                  (sellerProfile?.preferences as any)?.banking_setup_complete === true;
 
                 if (hasBankingDetails) {
                   // Seller has banking details - send "Payment on the way" email

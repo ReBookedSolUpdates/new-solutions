@@ -318,7 +318,7 @@ const OrderManagementView: React.FC<OrderManagementViewProps> = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
           <div className="space-y-0.5">
             <div className="text-book-600 font-medium">Order Status</div>
-            <Badge variant="secondary" className="capitalize text-xs">{order.status.replaceAll("_", " ")}</Badge>
+            <Badge variant="secondary" className="capitalize text-xs">{order.status.replace(/_/g, " ")}</Badge>
           </div>
           <div className="space-y-0.5">
             <div className="text-book-600 font-medium">Tracking</div>
@@ -494,7 +494,7 @@ const OrderManagementView: React.FC<OrderManagementViewProps> = () => {
     currentUserId: string;
   }> = ({ order, userRole, onNavigate }) => {
     const [isLoading, setIsLoading] = useState(false);
-    const listingId = order.book_id || order.item_id;
+    const listingId = order.book_id || (order as any).item_id;
 
     const handleChat = async () => {
       if (!order.buyer_id || !order.seller_id || !listingId) return;
@@ -654,7 +654,7 @@ const OrderManagementView: React.FC<OrderManagementViewProps> = () => {
             )}
 
             {/* Chat to Other Party */}
-            {order.status !== "cancelled" && (order.book_id || order.item_id) && order.buyer_id && order.seller_id && (
+            {order.status !== "cancelled" && (order.book_id || (order as any).item_id) && order.buyer_id && order.seller_id && (
               <ChatToPartyButton
                 order={order}
                 userRole={userRole}
