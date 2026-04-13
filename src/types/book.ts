@@ -1,0 +1,74 @@
+export interface BookMetadata {
+  ai_assisted?: boolean;
+  [key: string]: unknown;
+}
+
+export interface Book {
+  id: string;
+  title: string;
+  author: string;
+  description: string;
+  price: number;
+  category: string;
+  condition: "New" | "Good" | "Better" | "Average" | "Below Average";
+  imageUrl: string;
+  frontCover?: string;
+  backCover?: string;
+  insidePages?: string;
+  additionalImages?: string[];
+  sold: boolean;
+  createdAt: string;
+  itemType: "textbook" | "reader" | "uniform" | "school_supply";
+  parcelSize?: 'extra_small' | 'small' | 'medium' | 'large' | 'extra_large';
+  grade?: string;
+  universityYear?: string;
+  university?: string;
+  curriculum?: 'CAPS' | 'Cambridge' | 'IEB';
+  isbn?: string;
+  universityBookType?: 'Study Guide' | 'Course Book';
+  genre?: string;
+  province?: string;
+  // Uniform/Supply specific fields
+  schoolName?: string;
+  gender?: "Male" | "Female" | "Unisex";
+  size?: string;
+  color?: string;
+  subject?: string;
+  // Quantity fields
+  initialQuantity?: number;
+  availableQuantity?: number;
+  soldQuantity?: number;
+  metadata?: BookMetadata;
+  seller: {
+    id: string;
+    name: string;
+    email: string;
+    createdAt?: string;
+  };
+}
+
+export interface BookFormData {
+  title: string;
+  author: string;
+  description: string;
+  price: number;
+  category: string;
+  condition: "New" | "Good" | "Better" | "Average" | "Below Average";
+  imageUrl: string;
+  frontCover?: string;
+  backCover?: string;
+  insidePages?: string;
+  additionalImages?: string[];
+  itemType: "textbook" | "reader";
+  parcelSize?: 'extra_small' | 'small' | 'medium' | 'large' | 'extra_large';
+  grade?: string;
+  universityYear?: string;
+  university?: string;
+  curriculum?: 'CAPS' | 'Cambridge' | 'IEB';
+  isbn?: string;
+  universityBookType?: 'Study Guide' | 'Course Book';
+  genre?: string;
+  province?: string;
+  // Quantity to create listing with
+  quantity?: number;
+}

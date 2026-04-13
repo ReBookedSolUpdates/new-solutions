@@ -1,0 +1,220 @@
+/**
+ * Edge Function Client
+ * Handles API calls to Supabase Edge Functions with proper CORS headers
+ */
+
+import { supabase } from '@/integrations/supabase/client';
+import { ENV } from '@/config/environment';
+import debugLogger from '@/utils/debugLogger';
+
+// Derive the Supabase URL from the ENV config (always has a fallback)
+const SUPABASE_FUNCTIONS_BASE = `${ENV.VITE_SUPABASE_URL}/functions/v1`;
+
+interface EdgeFunctionOptions {
+  method?: 'GET' | 'POST' | 'PUT' | 'DELETE';
+  body?: any;
+  headers?: Record<string, string>;
+  timeout?: number;
+}
+
+interface EdgeFunctionResponse<T = any> {
+  success: boolean;
+  data?: T;
+  error?: string;
+  details?: any;
+}
+
+/**
+ * Get the current origin for CORS headers
+ */
+function getCurrentOrigin(): string {
+  if (typeof window !== 'undefined') {
+    return window.location.origin;
+  }
+  return 'https://rebooked-solutions.vercel.app';
+}
+
+/**
+ * Get proper headers for Edge Function calls
+ */
+function getEdgeFunctionHeaders(additionalHeaders: Record<string, string> = {}): Record<string, string> {
+  return {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${ENV.VITE_SUPABASE_ANON_KEY}`,
+    'Origin': getCurrentOrigin(),
+    ...additionalHeaders
+  };
+}
+
+/**
+ * Call a Supabase Edge Function with proper error handling and CORS
+ */
+export async function callEdgeFunction<T = any>(
+  functionName: string,
+  options: EdgeFunctionOptions = {}
+): Promise<EdgeFunctionResponse<T>> {
+  const {
+    method = 'POST',
+    body,
+    headers = {},
+    timeout = 30000 // 30 seconds default timeout
+  } = options;
+
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeout);
+
+  try {
+    const url = `${SUPABASE_FUNCTIONS_BASE}/${functionName}`;
+
+    debugLogger.debug('edgeFunctionClient', `Calling ${functionName}:`, {
+      url,
+      method,
+      body: body ? { ...body, message: body.message?.substring?.(0, 50) + '...' } : undefined,
+    });
+
+    const response = await fetch(url, {
+      method,
+      headers: getEdgeFunctionHeaders(headers),
+      body: body ? JSON.stringify(body) : undefined,
+      signal: controller.signal
+    });
+
+    clearTimeout(timeoutId);
+
+    // Handle different response types
+    if (response.status === 404) {
+      return {
+        success: false,
+        error: 'FUNCTION_NOT_FOUND',
+        details: {
+          message: `Edge Function '${functionName}' not found. Check deployment.`,
+          function_name: functionName,
+          url
+        }
+      };
+    }
+
+    let responseData: any;
+    const contentType = response.headers.get('content-type');
+
+    if (contentType?.includes('application/json')) {
+      responseData = await response.json();
+    } else {
+      const textData = await response.text();
+      responseData = { message: textData };
+    }
+
+    debugLogger.debug('edgeFunctionClient', `Response from ${functionName}:`, {
+      status: response.status,
+      ok: response.ok,
+      data: responseData,
+    });
+
+    if (!response.ok) {
+      debugLogger.error('edgeFunctionClient', `Error calling ${functionName}:`, {
+        status: response.status,
+        error: responseData.error,
+        details: responseData.details || responseData,
+      });
+      return {
+        success: false,
+        error: responseData.error || 'API_ERROR',
+        details: responseData.details || responseData
+      };
+    }
+
+    return {
+      success: true,
+      data: responseData
+    };
+
+  } catch (error) {
+    clearTimeout(timeoutId);
+
+    const errorMsg = error instanceof Error ? error.message : String(error);
+    debugLogger.error('edgeFunctionClient', `Exception calling ${functionName}:`, error);
+
+    if (error instanceof Error && error.name === 'AbortError') {
+      return {
+        success: false,
+        error: 'TIMEOUT',
+        details: {
+          message: `Request to ${functionName} timed out after ${timeout}ms`
+        }
+      };
+    }
+
+    return {
+      success: false,
+      error: 'NETWORK_ERROR',
+      details: {
+        message: errorMsg || 'Network request failed',
+        function_name: functionName
+      }
+    };
+  }
+}
+
+/**
+ * Specific helper functions for common operations
+ */
+
+export async function createOrder(orderData: any) {
+  return callEdgeFunction('create-order', {
+    method: 'POST',
+    body: orderData
+  });
+}
+
+export async function commitToSale(orderId: string) {
+  return callEdgeFunction('commit-to-sale', {
+    method: 'POST',
+    body: { order_id: orderId }
+  });
+}
+
+export async function declineCommit(orderId: string, reason?: string) {
+  return callEdgeFunction('decline-commit', {
+    method: 'POST',
+    body: { 
+      order_id: orderId,
+      ...(reason && { decline_reason: reason })
+    }
+  });
+}
+
+export async function markCollected(orderId: string) {
+  return callEdgeFunction('mark-collected', {
+    method: 'POST',
+    body: { order_id: orderId }
+  });
+}
+
+export async function initializePayment(paymentData: any) {
+  return callEdgeFunction('initialize-payment', {
+    method: 'POST',
+    body: paymentData
+  });
+}
+
+export async function verifyPayment(reference: string) {
+  return callEdgeFunction('verify-payment', {
+    method: 'POST',
+    body: { reference }
+  });
+}
+
+/**
+ * Test Edge Function connectivity
+ */
+export async function testEdgeFunctionConnectivity(functionName: string = 'health-test') {
+  
+  const result = await callEdgeFunction(functionName, {
+    method: 'POST',
+    body: { test: true },
+    timeout: 10000 // 10 second timeout for testing
+  });
+
+
+  return result;
+}

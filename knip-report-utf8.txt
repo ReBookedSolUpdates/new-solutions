@@ -1,0 +1,643 @@
+﻿[93m[4mUnused files[24m[39m (233)
+src/typecheck-placeholder.ts                                    
+public/error-block-sw.js                                        
+src/components/AddressEditDialog.tsx                            
+src/components/AuthErrorBoundary.tsx                            
+src/components/AuthTroubleshooter.tsx                           
+src/components/BobPayPopup.tsx                                  
+src/components/BookNotSellingDialog.tsx                         
+src/components/BookNotSellingHelp.tsx                           
+src/components/CampusLayout.tsx                                 
+src/components/CommitSystemExplainer.tsx                        
+src/components/DeleteProfileDialog.tsx                          
+src/components/EmailChangeDialog.tsx                            
+src/components/EmailConfirmationFix.tsx                         
+src/components/EmailDiagnosticPanel.tsx                         
+src/components/EmailServiceStatus.tsx                           
+src/components/EnhancedAddressEditDialog.tsx                    
+src/components/EnvironmentConfigHelper.tsx                      
+src/components/ErrorFallback.tsx                                
+src/components/FallbackAddressInput.tsx                         
+src/components/FeatureUpdateDialog.tsx                          
+src/components/GoogleMapsAddressAutocomplete.tsx                
+src/components/GoogleMapsSetupHelper.tsx                        
+src/components/GooglePlacesAutocomplete.tsx                     
+src/components/HowItWorksDialog.tsx                             
+src/components/InformativeShippingDashboard.tsx                 
+src/components/MobileShippingDashboard.tsx                      
+src/components/MultiImageUpload.tsx                             
+src/components/NavLink.tsx                                      
+src/components/NetworkStatusIndicator.tsx                       
+src/components/OAuthRedirectHandler.tsx                         
+src/components/PageTransition.tsx                               
+src/components/PaystackPopup.tsx                                
+src/components/PaystackPopupMobile.tsx                          
+src/components/PickupAddressInput.tsx                           
+src/components/RegistrationStatusBanner.tsx                     
+src/components/ReportIssueDialog.tsx                            
+src/components/SaleSuccessPopup.tsx                             
+src/components/SellerInfoModal.tsx                              
+src/components/SellerPolicyModal.tsx                            
+src/components/ShareReminderBanner.tsx                          
+src/components/ShippingComparison.tsx                           
+src/components/SimpleAddressDialog.tsx                          
+src/components/SimpleAddressEditDialog.tsx                      
+src/components/SimpleAddressInput.tsx                           
+src/components/SupabaseEmailSetupGuide.tsx                      
+src/components/TransparencyModal.tsx                            
+src/components/UnavailableBookCard.tsx                          
+src/config/banking.ts                                           
+src/config/production.ts                                        
+src/constants/categories.ts                                     
+src/constants/createListingCategories.ts                        
+src/constants/studyResources.ts                                 
+src/contexts/CartContextFixed.tsx                               
+src/hooks/useAPSAwareCourseAssignment.ts                        
+src/hooks/useConnectionMonitoring.ts                            
+src/hooks/useDebounceCallback.ts                                
+src/hooks/useDebouncedAuth.ts                                   
+src/hooks/useEnhancedAPSStorage.ts                              
+src/hooks/useErrorHandler.ts                                    
+src/hooks/useLocalStorage.ts                                    
+src/hooks/useMediaQuery.ts                                      
+src/hooks/usePlacesLibrary.ts                                   
+src/hooks/useSellerRequirements.ts                              
+src/hooks/useStudyResources.ts                                  
+src/pages/BookListing.tsx                                       
+src/pages/NotFound.tsx                                          
+src/services/apsAwareCourseAssignmentService.ts                 
+src/services/apsPersistenceService.ts                           
+src/services/automaticShipmentService.ts                        
+src/services/bookDeletionService.ts                             
+src/services/courierGuyService.ts                               
+src/services/eligibilityService.ts                              
+src/services/emailChangeService.ts                              
+src/services/enhancedSignupService.ts                           
+src/services/subaccountService.ts                               
+src/services/subjectMatchingService.ts                          
+src/services/universityCourseAssignmentService.ts               
+src/services/universitySpecificAPSService.ts                    
+src/services/universityValidationService.ts                     
+src/services/userStatsService.ts                                
+src/types/university.ts                                         
+src/utils/apiErrorHandler.ts                                    
+src/utils/apsCalculation.ts                                     
+src/utils/asyncUtils.ts                                         
+src/utils/buttonHandlerUtils.ts                                 
+src/utils/connectionStatus.ts                                   
+src/utils/databaseHealthCheck.ts                                
+src/utils/dbSchemaChecker.ts                                    
+src/utils/directEmailStyling.ts                                 
+src/utils/emailCopyUtils.ts                                     
+src/utils/emailErrorHandler.ts                                  
+src/utils/emailServiceHealthChecker.ts                          
+src/utils/emailVerificationChecker.ts                           
+src/utils/encryptionStatus.ts                                   
+src/utils/enhancedValidation.ts                                 
+src/utils/facultyGroupingUtils.ts                               
+src/utils/googleMapsUtils.ts                                    
+src/utils/healthCheck.ts                                        
+src/utils/networkUtils.ts                                       
+src/utils/notificationTypes.ts                                  
+src/utils/orderManagementUtils.ts                               
+src/utils/paymentValidation.ts                                  
+src/utils/performanceUtils.ts                                   
+src/utils/productionLogger.ts                                   
+src/utils/program-verification.ts                               
+src/utils/programAssignmentVerification.ts                      
+src/utils/refundHandler.ts                                      
+src/utils/safeFetch.ts                                          
+src/utils/scrollFix.ts                                          
+src/utils/secureLogs.ts                                         
+src/utils/securityUtils.ts                                      
+src/utils/shippingUtils.ts                                      
+src/utils/supabaseEmailChecker.ts                               
+src/utils/supabaseWrapper.ts                                    
+src/utils/typeHelpers.ts                                        
+src/utils/universityLogoUtils.ts                                
+src/utils/universityScoringUtils.ts                             
+src/utils/verificationUrlDiagnostics.ts                         
+src/components/ads/GoogleAd.tsx                                 
+src/components/banking/BankingDetailsForm.tsx                   
+src/components/banking/BankingRequirementGate.tsx               
+src/components/banking/BankingSetupForm.tsx                     
+src/components/banking/SubaccountEditForm.tsx                   
+src/components/banking/SubaccountView.tsx                       
+src/components/book-details/BookDescription.tsx                 
+src/components/checkout/EnhancedShippingForm.tsx                
+src/components/checkout/PaymentConfirmation.tsx                 
+src/components/checkout/SimpleShippingForm.tsx                  
+src/components/courier-guy/CourierGuyTracker.tsx                
+src/components/courier-guy/CourierGuyTrackingOnly.tsx           
+src/components/delivery/BobGoRatesExplorer.tsx                  
+src/components/delivery/DeliveryQuoteComparison.tsx             
+src/components/notifications/OrderNotificationSystem.tsx        
+src/components/orders/LockerShipmentInfo.tsx                    
+src/components/orders/OrderCommitButton.tsx                     
+src/components/orders/OrderCommitButtonFallback.tsx             
+src/components/orders/OrderDeclineButton.tsx                    
+src/components/orders/OrderFlowStatus.tsx                       
+src/components/profile/AccountInformation.tsx                   
+src/components/profile/CommitTab.tsx                            
+src/components/profile/ListingsSidebar.tsx                      
+src/components/profile/MobileListingsView.tsx                   
+src/components/profile/ModernUserProfileTabs.tsx                
+src/components/profile/ProfileActions.tsx                       
+src/components/profile/UserProfileTabs.tsx                      
+src/components/profile/UserProfileTabsOld.tsx                   
+src/components/reviews/ReviewForm.tsx                           
+src/components/ui/aspect-ratio.tsx                              
+src/components/ui/breadcrumb.tsx                                
+src/components/ui/calendar.tsx                                  
+src/components/ui/carousel.tsx                                  
+src/components/ui/chart.tsx                                     
+src/components/ui/checkbox.tsx                                  
+src/components/ui/collapsible.tsx                               
+src/components/ui/context-menu.tsx                              
+src/components/ui/drawer.tsx                                    
+src/components/ui/hover-card.tsx                                
+src/components/ui/input-otp.tsx                                 
+src/components/ui/loading-spinner.tsx                           
+src/components/ui/menubar.tsx                                   
+src/components/ui/navigation-menu.tsx                           
+src/components/ui/OptimizedImage.tsx                            
+src/components/ui/province-selector.tsx                         
+src/components/ui/resizable.tsx                                 
+src/components/ui/scroll-area.tsx                               
+src/components/ui/sheet.tsx                                     
+src/components/ui/sidebar.tsx                                   
+src/components/ui/table.tsx                                     
+src/components/ui/toast.tsx                                     
+src/components/ui/toaster.tsx                                   
+src/components/ui/toggle-group.tsx                              
+src/components/ui/toggle.tsx                                    
+src/components/ui/use-toast.ts                                  
+src/integrations/supabase/bobgo-client.ts                       
+src/integrations/supabase/shipping-client.ts                    
+supabase/functions/address-autocomplete/index.ts                
+supabase/functions/address-place-details/index.ts               
+supabase/functions/bobpay-initialize-payment/index.ts           
+supabase/functions/bobpay-refund/index.ts                       
+supabase/functions/bobpay-webhook/index.ts                      
+supabase/functions/cancel-order-with-refund/index.ts            
+supabase/functions/cancel-shipment/index.ts                     
+supabase/functions/chat-history/index.ts                        
+supabase/functions/chat-notification/index.ts                   
+supabase/functions/chat-submit/index.ts                         
+supabase/functions/commit-to-sale/index.ts                      
+supabase/functions/create-order/index.ts                        
+supabase/functions/create-shipment/index.ts                     
+supabase/functions/credit-wallet-on-collection/index.ts         
+supabase/functions/decline-commit/index.ts                      
+supabase/functions/decrypt-address/index.ts                     
+supabase/functions/decrypt-banking-details/index.ts             
+supabase/functions/encrypt-address/index.ts                     
+supabase/functions/encrypt-banking-details/index.ts             
+supabase/functions/extract-book-details/index.ts                
+supabase/functions/get-pickup-points/index.ts                   
+supabase/functions/get-rates/index.ts                           
+supabase/functions/get-shipment-label/index.ts                  
+supabase/functions/process-affiliate-earning/index.ts           
+supabase/functions/process-book-purchase/index.ts               
+supabase/functions/production_bobpay-initialize-payment/index.ts
+supabase/functions/production_bobpay-refund/index.ts            
+supabase/functions/production_bobpay-webhook/index.ts           
+supabase/functions/relay-webhook/index.ts                       
+supabase/functions/send-email/index.ts                          
+supabase/functions/track-referral/index.ts                      
+supabase/functions/track-shipment/index.ts                      
+supabase/functions/update-order-statuses/index.ts               
+supabase/functions/validate-coupon/index.ts                     
+supabase/functions/_shared/auth-utils.ts                        
+supabase/functions/_shared/bobgo-config.ts                      
+supabase/functions/_shared/cors.ts                              
+supabase/functions/_shared/email-templates.ts                   
+supabase/functions/_shared/email-types.ts                       
+supabase/functions/_shared/email-utils.ts                       
+supabase/functions/_shared/enhanced-body-parser.ts              
+supabase/functions/_shared/error-utils.ts                       
+supabase/functions/_shared/moderation.ts                        
+supabase/functions/_shared/openai.ts                            
+supabase/functions/_shared/options-handler.ts                   
+supabase/functions/_shared/paystack-api.ts                      
+supabase/functions/_shared/paystack-refund.ts                   
+supabase/functions/_shared/request-utils.ts                     
+supabase/functions/_shared/response-utils.ts                    
+supabase/functions/_shared/safe-body-parser.ts                  
+supabase/functions/_shared/uuid-validator.ts                    
+src/components/admin/contact/ContactMessageCard.tsx             
+src/components/admin/contact/ContactMessageTable.tsx            
+src/components/admin/reports/ModerationReportCard.tsx           
+src/components/admin/reports/ModerationTableRow.tsx             
+src/components/admin/reports/ReportActions.tsx                  
+src/components/admin/reports/ReportFilters.tsx                  
+supabase/functions/coupons/validate/index.ts                    
+[93m[4mUnused dependencies[24m[39m (34)
+@radix-ui/react-aspect-ratio     package.json:17:6
+@radix-ui/react-checkbox         package.json:19:6
+@radix-ui/react-collapsible      package.json:20:6
+@radix-ui/react-context-menu     package.json:21:6
+@radix-ui/react-hover-card       package.json:24:6
+@radix-ui/react-menubar          package.json:26:6
+@radix-ui/react-navigation-menu  package.json:27:6
+@radix-ui/react-scroll-area      package.json:31:6
+@radix-ui/react-toast            package.json:38:6
+@radix-ui/react-toggle           package.json:39:6
+@radix-ui/react-toggle-group     package.json:40:6
+@tiptap/extension-color          package.json:46:6
+@tiptap/extension-highlight      package.json:47:6
+@tiptap/extension-placeholder    package.json:48:6
+@tiptap/extension-text-style     package.json:49:6
+@tiptap/extension-underline      package.json:50:6
+@tiptap/react                    package.json:51:6
+@tiptap/starter-kit              package.json:52:6
+@types/dompurify                 package.json:53:6
+canvas-confetti                  package.json:56:6
+dompurify                        package.json:61:6
+embla-carousel-react             package.json:62:6
+fabric                           package.json:63:6
+framer-motion                    package.json:64:6
+input-otp                        package.json:66:6
+pdf-lib                          package.json:69:6
+pdfjs-dist                       package.json:70:6
+react-day-picker                 package.json:72:6
+react-markdown                   package.json:75:6
+react-pdf                        package.json:76:6
+react-resizable-panels           package.json:77:6
+recharts                         package.json:79:6
+remark-gfm                       package.json:80:6
+vaul                             package.json:84:6
+[93m[4mUnused devDependencies[24m[39m (1)
+@tailwindcss/typography  package.json:90:6
+[93m[4mUnlisted dependencies[24m[39m (1)
+jsdom  vitest.config.ts
+[93m[4mUnused exports[24m[39m (222)
+analyzeError                               function  src/utils/networkErrorHandler.ts:20:17                             
+default                                              src/utils/networkErrorHandler.ts:177:16                            
+parseEnvBool                               function  src/config/envParser.ts:15:17                                      
+useLoadingState                                      src/utils/loadingStateManager.ts:120:14                            
+default                                    variable  src/utils/loadingStateManager.ts:133:16                            
+useGoogleMaps                                        src/contexts/GoogleMapsContext.tsx:19:14                           
+default                                    variable  src/contexts/GoogleMapsContext.tsx:88:16                           
+CardFooter                                           src/components/ui/card.tsx:72:28                                   
+createOrder                                function  src/utils/edgeFunctionClient.ts:162:23                             
+commitToSale                               function  src/utils/edgeFunctionClient.ts:169:23                             
+declineCommit                              function  src/utils/edgeFunctionClient.ts:176:23                             
+markCollected                              function  src/utils/edgeFunctionClient.ts:186:23                             
+initializePayment                          function  src/utils/edgeFunctionClient.ts:193:23                             
+verifyPayment                              function  src/utils/edgeFunctionClient.ts:200:23                             
+testEdgeFunctionConnectivity               function  src/utils/edgeFunctionClient.ts:210:23                             
+registerUser                                         src/services/authOperations.ts:65:14                               
+upgradeToUserProfile                                 src/services/authOperations.ts:384:14                              
+createUserProfile                                    src/services/authOperations.ts:392:14                              
+isAuthError                                          src/utils/errorUtils.ts:156:14                                     
+isDatabaseError                                      src/utils/errorUtils.ts:175:14                                     
+createTimeoutPromise                                 src/utils/errorUtils.ts:239:14                                     
+getUserErrorMessage                                  src/utils/errorUtils.ts:269:14                                     
+logQueryDebug                                        src/utils/errorUtils.ts:270:14                                     
+getBookPickupAddress                                 src/services/addressService.ts:598:14                              
+getOrderShippingAddress                              src/services/addressService.ts:618:14                              
+DEFAULT_SEO                                          src/utils/seoUtils.ts:10:14                                        
+generatePageSEO                                      src/utils/seoUtils.ts:28:14                                        
+generateStructuredData                               src/utils/seoUtils.ts:54:14                                        
+updateMetaTags                                       src/utils/seoUtils.ts:86:14                                        
+isValidBookId                                        src/utils/bookUtils.ts:4:14                                        
+debugBookId                                          src/utils/bookUtils.ts:24:14                                       
+default                                    variable  src/hooks/useCommit.ts:125:16                                      
+toSlug                                               src/utils/textbookUrlUtils.ts:35:14                                
+fromSlug                                             src/utils/textbookUrlUtils.ts:38:14                                
+buildListingUrl                                      src/utils/textbookUrlUtils.ts:140:14                               
+useFormField                                         src/components/ui/form.tsx:168:3                                   
+FormDescription                                      src/components/ui/form.tsx:173:3                                   
+SelectSeparator                                      src/components/ui/select.tsx:155:3                                 
+SelectScrollUpButton                                 src/components/ui/select.tsx:156:3                                 
+SelectScrollDownButton                               src/components/ui/select.tsx:157:3                                 
+badgeVariants                                        src/components/ui/badge.tsx:40:17                                  
+archiveConversation                        function  src/services/chatService.ts:180:23                                 
+formatErrorForDisplay                                src/utils/errorDisplayUtils.ts:16:14                               
+logFormattedError                                    src/utils/errorDisplayUtils.ts:104:14                              
+getDeveloperErrorMessage                             src/utils/errorDisplayUtils.ts:121:14                              
+createFormattedErrorHandler                          src/utils/errorDisplayUtils.ts:129:14                              
+default                                              src/utils/errorDisplayUtils.ts:181:16                              
+getPopupTrackingData                                 src/services/popupTrackingService.ts:16:14                         
+updatePopupTrackingData                              src/services/popupTrackingService.ts:35:14                         
+hasPopupBeenShown                                    src/services/popupTrackingService.ts:53:14                         
+resetPopupTracking                                   src/services/popupTrackingService.ts:58:14                         
+markNotificationAsRead                     function  src/services/notificationService.ts:149:23                         
+getUserBookCount                                     src/services/userBookCountService.ts:7:14                          
+hasListedBookseBefore                                src/services/userBookCountService.ts:30:14                         
+getParcelSizeByKey                                   src/constants/parcelSizes.ts:61:14                                 
+currencyUtils                                        src/types/checkout.ts:215:14                                       
+validationUtils                                      src/types/checkout.ts:224:14                                       
+getErrorInfo                               function  src/utils/errorMessageUtils.ts:94:17                               
+logError                                   function  src/utils/errorMessageUtils.ts:111:17                              
+createToastErrorMessage                    function  src/utils/errorMessageUtils.ts:127:17                              
+safeErrorString                            function  src/utils/errorMessageUtils.ts:140:17                              
+sanitizeApiError                           function  src/utils/errorMessageUtils.ts:149:17                              
+getErrorBoundaryMessage                    function  src/utils/errorMessageUtils.ts:173:17                              
+errorUtils                                           src/utils/errorMessageUtils.ts:185:14                              
+extractConfirmationParams                            src/utils/confirmationLinkFixer.ts:63:14                           
+isValidConfirmationLink                              src/utils/confirmationLinkFixer.ts:88:14                           
+getAllContactMessages                                src/services/contactService.ts:84:14                               
+markMessageAsRead                                    src/services/contactService.ts:100:14                              
+clearAllMessages                                     src/services/contactService.ts:118:14                              
+getAllReports                                        src/services/reportService.ts:131:14                               
+getReportsByStatus                                   src/services/reportService.ts:148:14                               
+getSuspendedUsers                                    src/services/reportService.ts:168:14                               
+dismissReport                                        src/services/reportService.ts:186:14                               
+banUserFromReport                                    src/services/reportService.ts:201:14                               
+suspendUserFromReport                                src/services/reportService.ts:245:14                               
+extractProvinceFromLockerAddress           function  src/utils/provinceExtractorUtils.ts:8:17                           
+Constants                                            src/integrations/supabase/types.ts:3394:14                         
+IS_PRODUCTION                                        src/config/environment.ts:36:14                                    
+IS_DEVELOPMENT                                       src/config/environment.ts:37:14                                    
+validateEnvironment                                  src/config/environment.ts:40:14                                    
+PRODUCTION_CONFIG                                    src/config/environment.ts:106:14                                   
+safeGetProfile                                       src/utils/profileUtils.ts:22:14                                    
+getUserProfile                                       src/utils/profileUtils.ts:43:14                                    
+profileExists                                        src/utils/profileUtils.ts:66:14                                    
+EMAIL_TEMPLATES                                      src/services/emailService.ts:36:14                                 
+EmailService                                         src/services/emailService.ts:1003:10                               
+useEmailService                            function  src/services/emailService.ts:1006:17                               
+validateAddress                                      src/services/addressValidationService.ts:15:14                     
+canUserListBooks                                     src/services/addressValidationService.ts:24:14                     
+formatErrorForLogging                                src/utils/errorHandling.ts:8:14                                    
+getReadableErrorMessage                              src/utils/errorHandling.ts:106:14                                  
+createErrorHandler                                   src/utils/errorHandling.ts:149:14                                  
+default                                              src/utils/errorHandling.ts:162:16                                  
+formatError                                          src/utils/safeErrorLogger.ts:5:14                                  
+isNetworkError                                       src/utils/safeErrorLogger.ts:94:14                                 
+PROVINCE_MAPPING                                     src/utils/addressNormalizationUtils.ts:14:14                       
+PROVINCE_CODE_MAPPING                                src/utils/addressNormalizationUtils.ts:27:14                       
+validatePostalCode                         function  src/utils/addressNormalizationUtils.ts:171:17                      
+getPostalCodeError                         function  src/utils/addressNormalizationUtils.ts:185:17                      
+ensureCompleteProvince                     function  src/utils/addressNormalizationUtils.ts:331:17                      
+canonicalToSnakeCase                       function  src/utils/addressNormalizationUtils.ts:362:17                      
+saveOrderShippingAddress                             src/services/simplifiedAddressService.ts:381:14                    
+toast                                                src/components/ui/sonner.tsx:34:19                                 
+DialogPortal                                         src/components/ui/dialog.tsx:115:3                                 
+DialogOverlay                                        src/components/ui/dialog.tsx:116:3                                 
+ALL_SOUTH_AFRICAN_UNIVERSITIES                       src/constants/universities.ts:394:14                               
+COMMON_DEGREES                                       src/constants/universities.ts:519:14                               
+READER_GENRES                                        src/constants/readerGenres.ts:1:14                                 
+generateResponsiveImageSources                       src/utils/imageOptimization.ts:47:14                               
+supportsWebP                                         src/utils/imageOptimization.ts:68:14                               
+createImagePlaceholder                               src/utils/imageOptimization.ts:82:14                               
+preloadImage                                         src/utils/imageOptimization.ts:99:14                               
+createLazyImageObserver                              src/utils/imageOptimization.ts:115:14                              
+fallbackBooksData                                    src/utils/fallbackBooksData.ts:4:14                                
+checkCommitDeadline                                  src/services/commitService.ts:139:14                               
+processRefund                                        src/services/commitService.ts:347:14                               
+handleOverdueCommits                                 src/services/commitService.ts:383:14                               
+enforceCommitDeadlines                               src/services/commitService.ts:421:14                               
+COMMIT_DEADLINE_HOURS                                src/services/commitService.ts:481:14                               
+DropdownMenuCheckboxItem                             src/components/ui/dropdown-menu.tsx:189:3                          
+DropdownMenuRadioItem                                src/components/ui/dropdown-menu.tsx:190:3                          
+DropdownMenuShortcut                                 src/components/ui/dropdown-menu.tsx:193:3                          
+DropdownMenuGroup                                    src/components/ui/dropdown-menu.tsx:194:3                          
+DropdownMenuPortal                                   src/components/ui/dropdown-menu.tsx:195:3                          
+DropdownMenuSub                                      src/components/ui/dropdown-menu.tsx:196:3                          
+DropdownMenuSubContent                               src/components/ui/dropdown-menu.tsx:197:3                          
+DropdownMenuSubTrigger                               src/components/ui/dropdown-menu.tsx:198:3                          
+DropdownMenuRadioGroup                               src/components/ui/dropdown-menu.tsx:199:3                          
+PROVINCES                                            src/components/create-listing/ProvinceSelect.tsx:18:14             
+ManualAddressInput                                   src/components/ManualAddressInput.tsx:44:14                        
+initializeBobPayCheckout                             src/utils/bobpayCheckoutHelper.ts:16:14                            
+initiateBobPayRefund                                 src/utils/bobpayCheckoutHelper.ts:145:14                           
+OrderCancellationService                   class     src/services/orderCancellationService.ts:50:14                     
+extractErrorDetails                        function  src/utils/errorLogging.ts:18:17                                    
+createErrorInfo                            function  src/utils/errorLogging.ts:93:17                                    
+AlertDialogPortal                                    src/components/ui/alert-dialog.tsx:129:3                           
+AlertDialogOverlay                                   src/components/ui/alert-dialog.tsx:130:3                           
+FallbackService                                      src/services/fallbackService.ts:260:10                             
+useFallbackService                         function  src/services/fallbackService.ts:263:17                             
+useServiceStatus                           function  src/services/fallbackService.ts:271:17                             
+default                                    variable  src/hooks/useBanking.ts:140:16                                     
+BankingDecryptionService                   class     src/services/bankingDecryptionService.ts:20:14                     
+fetchPickupPoints                                    src/services/addressAutocompleteService.ts:98:14                   
+getPickupPointLocations                    function  src/services/bobgoLocationsService.ts:23:23                        
+default                                    variable  src/components/LoadingSpinner.tsx:41:16                            
+createUnifiedShipment                                src/services/unifiedDeliveryService.ts:356:14                      
+default                                              src/services/unifiedDeliveryService.ts:569:16                      
+EMAIL_TEMPLATES                                      src/utils/emailTemplateRegistry.ts:3:14                            
+getTemplatesByCategory                     function  src/utils/emailTemplateRegistry.ts:581:17                          
+getAllTemplateCategories                   function  src/utils/emailTemplateRegistry.ts:585:17                          
+useAddressFallback                                   src/hooks/useAddressFallback.ts:26:14                              
+CommandDialog                                        src/components/ui/command.tsx:147:3                                
+CommandShortcut                                      src/components/ui/command.tsx:153:3                                
+CommandSeparator                                     src/components/ui/command.tsx:154:3                                
+EMAIL_STYLES                                         src/email-templates/index.ts:2:10                                  
+EMAIL_FOOTER                                         src/email-templates/index.ts:2:24                                  
+createEmailTemplate                                  src/email-templates/index.ts:2:38                                  
+EMAIL_TEMPLATES                                      src/email-templates/index.ts:3:10                                  
+getTemplateById                                      src/email-templates/index.ts:3:27                                  
+getTemplatesByCategory                               src/email-templates/index.ts:3:44                                  
+getAllTemplateCategories                             src/email-templates/index.ts:3:68                                  
+sendWalletCreditNotificationEmail                    src/email-templates/index.ts:6:47                                  
+createSellerCreditNotificationEmail                  src/email-templates/index.ts:7:10                                  
+sendSellerCreditNotificationEmail                    src/email-templates/index.ts:7:47                                  
+createDenialEmailTemplate                            src/email-templates/index.ts:8:10                                  
+sendDenialEmail                                      src/email-templates/index.ts:8:37                                  
+createPendingCommitEmail                             src/email-templates/index.ts:11:10                                 
+sendPendingCommitEmail                               src/email-templates/index.ts:11:36                                 
+createOrderDeclinedBuyerEmail                        src/email-templates/index.ts:12:10                                 
+sendOrderDeclinedBuyerEmail                          src/email-templates/index.ts:12:41                                 
+createOrderDeclinedSellerEmail                       src/email-templates/index.ts:13:10                                 
+sendOrderDeclinedSellerEmail                         src/email-templates/index.ts:13:42                                 
+createOrderConfirmedBuyerEmail                       src/email-templates/index.ts:14:10                                 
+sendOrderConfirmedBuyerEmail                         src/email-templates/index.ts:14:42                                 
+createOrderConfirmedSellerEmail                      src/email-templates/index.ts:15:10                                 
+sendOrderConfirmedSellerEmail                        src/email-templates/index.ts:15:43                                 
+sendDeliveryConfirmationRequestEmail                 src/email-templates/index.ts:18:50                                 
+sendDeliveryConfirmedBuyerEmail                      src/email-templates/index.ts:19:45                                 
+sendDeliveryComplaintAcknowledgmentBuyerΓÇª            src/email-templates/index.ts:20:59                                 
+sendDeliveryComplaintNotificationSellerEΓÇª            src/email-templates/index.ts:21:58                                 
+createSellerWaitingForDeliveryConfirmatiΓÇª            src/email-templates/index.ts:22:10                                 
+sendSellerWaitingForDeliveryConfirmationΓÇª            src/email-templates/index.ts:22:59                                 
+sendPaymentOnTheWayBankTransferEmail                 src/email-templates/index.ts:23:50                                 
+BankingEncryptionService                   class     src/services/bankingEncryptionService.ts:25:14                     
+PaymentErrorHandler                                  src/components/payments/PaymentErrorHandler.tsx:29:14              
+clearIdempotencyRecord                     function  src/utils/idempotencyUtils.ts:116:17                               
+cleanupExpiredRecords                      function  src/utils/idempotencyUtils.ts:130:17                               
+getTrackedPaymentReferences                function  src/utils/idempotencyUtils.ts:166:17                               
+clearAllRecords                            function  src/utils/idempotencyUtils.ts:179:17                               
+VALID_PICKUP_TYPES                                   src/utils/pickupTypeValidationUtils.ts:19:14                       
+isValidPickupType                          function  src/utils/pickupTypeValidationUtils.ts:53:17                       
+getPickupTypeError                         function  src/utils/pickupTypeValidationUtils.ts:63:17                       
+validateLockerData                         function  src/utils/pickupTypeValidationUtils.ts:81:17                       
+validateDoorDeliveryData                   function  src/utils/pickupTypeValidationUtils.ts:103:17                      
+isPickupDataConsistent                     function  src/utils/pickupTypeValidationUtils.ts:255:17                      
+getPickupTypeLabel                         function  src/utils/pickupTypeValidationUtils.ts:286:17                      
+EMAIL_TEMPLATES                                      src/email-templates/registry.ts:3:14                               
+getTemplateById                            function  src/email-templates/registry.ts:819:17                             
+getTemplatesByCategory                     function  src/email-templates/registry.ts:823:17                             
+getAllTemplateCategories                   function  src/email-templates/registry.ts:827:17                             
+sendWalletCreditNotificationEmail                    src/email-templates/templates/wallet-credit-notification.ts:104:14 
+createSellerCreditNotificationEmail                  src/email-templates/templates/seller-credit-notification.ts:12:14  
+sendSellerCreditNotificationEmail                    src/email-templates/templates/seller-credit-notification.ts:104:14 
+createDenialEmailTemplate                            src/email-templates/templates/denial.ts:13:14                      
+sendDenialEmail                                      src/email-templates/templates/denial.ts:98:14                      
+createPendingCommitEmail                             src/email-templates/templates/pending-commit.ts:13:14              
+sendPendingCommitEmail                               src/email-templates/templates/pending-commit.ts:123:14             
+createOrderDeclinedBuyerEmail                        src/email-templates/templates/order-declined-buyer.ts:12:14        
+sendOrderDeclinedBuyerEmail                          src/email-templates/templates/order-declined-buyer.ts:106:14       
+createOrderDeclinedSellerEmail                       src/email-templates/templates/order-declined-seller.ts:10:14       
+sendOrderDeclinedSellerEmail                         src/email-templates/templates/order-declined-seller.ts:102:14      
+createOrderConfirmedBuyerEmail                       src/email-templates/templates/order-confirmed-buyer.ts:12:14       
+sendOrderConfirmedBuyerEmail                         src/email-templates/templates/order-confirmed-buyer.ts:104:14      
+createOrderConfirmedSellerEmail                      src/email-templates/templates/order-confirmed-seller.ts:12:14      
+sendOrderConfirmedSellerEmail                        src/email-templates/templates/order-confirmed-seller.ts:114:14     
+sendDeliveryConfirmationRequestEmail                 ΓÇªc/email-templates/templates/delivery-confirmation-request.ts:60:14
+sendDeliveryConfirmedBuyerEmail                      src/email-templates/templates/delivery-confirmed-buyer.ts:37:14    
+sendDeliveryComplaintAcknowledgmentBuyerΓÇª            ΓÇªmplates/templates/delivery-complaint-acknowledgment-buyer.ts:37:14
+sendDeliveryComplaintNotificationSellerEΓÇª            ΓÇªemplates/templates/delivery-complaint-notification-seller.ts:38:14
+createSellerWaitingForDeliveryConfirmatiΓÇª            ΓÇªplates/templates/seller-waiting-for-delivery-confirmation.ts:10:14
+sendSellerWaitingForDeliveryConfirmationΓÇª            ΓÇªplates/templates/seller-waiting-for-delivery-confirmation.ts:53:14
+sendPaymentOnTheWayBankTransferEmail                 ΓÇªmail-templates/templates/payment-on-the-way-bank-transfer.ts:36:14
+[93m[4mUnused exported types[24m[39m (129)
+RetryOptions                           interface  src/utils/networkErrorHandler.ts:3:18                                 
+NetworkErrorInfo                       interface  src/utils/networkErrorHandler.ts:9:18                                 
+UserProfile                            interface  src/contexts/AuthContext.tsx:24:18                                    
+ButtonProps                            interface  src/components/ui/button.tsx:39:18                                    
+ActivityType                           type       src/services/activityService.ts:6:13                                  
+EntityType                             type       src/services/activityService.ts:31:13                                 
+ActivityLogEntry                       interface  src/services/activityService.ts:43:18                                 
+SEOConfig                              interface  src/utils/seoUtils.ts:1:18                                            
+TextareaProps                          interface  src/components/ui/textarea.tsx:5:18                                   
+BadgeProps                             interface  src/components/ui/badge.tsx:27:18                                     
+Order                                  type       src/components/orders/OrderManagementView.tsx:34:13                   
+UserStats                              interface  src/types/address.ts:43:18                                            
+DebugInfo                              interface  src/types/address.ts:53:18                                            
+DatabaseTestResult                     interface  src/types/address.ts:62:18                                            
+FormattedError                         interface  src/utils/errorDisplayUtils.ts:6:18                                   
+PopupTrackingData                      interface  src/services/popupTrackingService.ts:6:18                             
+CreateNotificationData                 interface  src/services/notificationService.ts:34:18                             
+ParcelSize                             interface  src/constants/parcelSizes.ts:3:18                                     
+CheckoutSeller                         interface  src/types/checkout.ts:122:18                                          
+CheckoutItem                           interface  src/types/checkout.ts:130:18                                          
+CheckoutDeliveryQuote                  interface  src/types/checkout.ts:145:18                                          
+CheckoutOrderSummary                   interface  src/types/checkout.ts:154:18                                          
+CheckoutValidation                     interface  src/types/checkout.ts:163:18                                          
+CheckoutStep                           type       src/types/checkout.ts:170:13                                          
+CheckoutActions                        interface  src/types/checkout.ts:177:18                                          
+PaymentData                            interface  src/types/checkout.ts:196:18                                          
+PaymentResult                          interface  src/types/checkout.ts:206:18                                          
+BackupEmailOptions                     interface  src/utils/backupEmailService.ts:48:18                                 
+SafeErrorInfo                          interface  src/utils/errorMessageUtils.ts:6:18                                   
+VerificationResult                     interface  src/services/emailVerificationService.ts:4:18                         
+VerificationParams                     interface  src/services/emailVerificationService.ts:12:18                        
+ContactMessageData                     interface  src/services/contactService.ts:6:18                                   
+ContactMessage                         interface  src/services/contactService.ts:13:18                                  
+ReportData                             interface  src/services/reportService.ts:6:18                                    
+GeneralReportData                      interface  src/services/reportService.ts:15:18                                   
+Tables                                 type       src/integrations/supabase/types.ts:3281:13                            
+TablesInsert                           type       src/integrations/supabase/types.ts:3310:13                            
+TablesUpdate                           type       src/integrations/supabase/types.ts:3335:13                            
+Enums                                  type       src/integrations/supabase/types.ts:3360:13                            
+CompositeTypes                         type       src/integrations/supabase/types.ts:3377:13                            
+EmailRequest                           interface  src/services/emailService.ts:5:18                                     
+EmailAttachment                        interface  src/services/emailService.ts:17:18                                    
+EmailTemplate                          interface  src/services/emailService.ts:24:18                                    
+EmailResponse                          interface  src/services/emailService.ts:29:18                                    
+EmailTemplateName                      type       src/services/emailService.ts:59:13                                    
+RawAddress                             interface  src/utils/addressNormalizationUtils.ts:80:18                          
+Order                                  interface  src/types/banking.ts:41:18                                            
+ShippingAddress                        interface  src/types/banking.ts:56:18                                            
+OrderMetadata                          interface  src/types/banking.ts:67:18                                            
+PaymentInitialization                  interface  src/types/banking.ts:81:18                                            
+PaymentVerificationResponse            interface  src/types/banking.ts:101:18                                           
+SubaccountCreationRequest              interface  src/types/banking.ts:133:18                                           
+SubaccountCreationResponse             interface  src/types/banking.ts:145:18                                           
+BankingFormData                        interface  src/types/banking.ts:169:18                                           
+BankingValidationErrors                interface  src/types/banking.ts:178:18                                           
+PaymentSummary                         interface  src/types/banking.ts:204:18                                           
+OrderStatus                            enum       src/types/banking.ts:213:13                                           
+BankingStatusEnum                      enum       src/types/banking.ts:222:13                                           
+DeliveryMethod                         enum       src/types/banking.ts:229:13                                           
+StoredAddress                          interface  src/services/fallbackAddressService.ts:10:18                          
+University                             interface  src/constants/universities.ts:1:18                                    
+SimpleUniversity                       interface  src/constants/universities.ts:18:18                                   
+Degree                                 interface  src/constants/universities.ts:27:18                                   
+CommitData                             interface  src/services/commitService.ts:5:18                                    
+CompressionOptions                     interface  src/utils/imageCompression.ts:1:18                                    
+CompressionResult                      interface  src/utils/imageCompression.ts:8:18                                    
+CancellationResult                     interface  src/services/orderCancellationService.ts:36:18                        
+ErrorDetails                           interface  src/utils/errorLogging.ts:6:18                                        
+FallbackConfig                         interface  src/services/fallbackService.ts:4:18                                  
+ServiceResponse                        interface  src/services/fallbackService.ts:13:18                                 
+DecryptionResult                       interface  src/services/bankingDecryptionService.ts:13:18                        
+AddressDetails                         interface  src/services/addressAutocompleteService.ts:9:18                       
+PickupPoint                            interface  src/services/addressAutocompleteService.ts:22:18                      
+UnifiedAddress                         interface  src/services/unifiedDeliveryService.ts:5:18                           
+UnifiedParcel                          interface  src/services/unifiedDeliveryService.ts:24:18                          
+UnifiedShipmentRequest                 interface  src/services/unifiedDeliveryService.ts:35:18                          
+UnifiedPickupPoint                     interface  src/services/unifiedDeliveryService.ts:49:18                          
+UnifiedQuoteRequest                    interface  src/services/unifiedDeliveryService.ts:54:18                          
+UnifiedShipment                        interface  src/services/unifiedDeliveryService.ts:83:18                          
+ReviewInput                            interface  src/services/reviewService.ts:31:18                                   
+AddressFallbackState                   interface  src/hooks/useAddressFallback.ts:17:18                                 
+UseAddressFallbackReturn               type       src/hooks/useAddressFallback.ts:190:13                                
+BobPayInitRequest                      interface  src/integrations/supabase/bobpay-client.ts:7:18                       
+BobPayRefundRequest                    interface  src/integrations/supabase/bobpay-client.ts:23:18                      
+BobPayResponse                         interface  src/integrations/supabase/bobpay-client.ts:29:18                      
+BobPayRefundResponse                   interface  src/integrations/supabase/bobpay-client.ts:39:18                      
+RefundRequest                          interface  src/services/refundService.ts:3:18                                    
+RefundResult                           interface  src/services/refundService.ts:10:18                                   
+EmailTemplateData                      interface  src/email-templates/styles.ts:125:18                                  
+EmailTemplate                          type       src/email-templates/index.ts:2:64                                     
+EmailTemplateData                      type       src/email-templates/index.ts:2:84                                     
+WalletCreditNotificationData           type       src/email-templates/index.ts:6:87                                     
+SellerCreditNotificationData           type       src/email-templates/index.ts:7:87                                     
+DenialEmailData                        type       src/email-templates/index.ts:8:59                                     
+PendingCommitEmailData                 type       src/email-templates/index.ts:11:65                                    
+OrderDeclinedBuyerData                 type       src/email-templates/index.ts:12:75                                    
+OrderDeclinedSellerData                type       src/email-templates/index.ts:13:77                                    
+OrderConfirmedBuyerData                type       src/email-templates/index.ts:14:77                                    
+OrderConfirmedSellerData               type       src/email-templates/index.ts:15:79                                    
+DeliveryConfirmationRequestData        type       src/email-templates/index.ts:18:93                                    
+DeliveryConfirmedBuyerData             type       src/email-templates/index.ts:19:83                                    
+DeliveryComplaintAcknowledgmentBuyerΓÇª  type       src/email-templates/index.ts:20:111                                   
+DeliveryComplaintNotificationSellerDΓÇª  type       src/email-templates/index.ts:21:109                                   
+SellerWaitingForDeliveryConfirmationΓÇª  type       src/email-templates/index.ts:22:111                                   
+PaymentOnTheWayBankTransferData        type       src/email-templates/index.ts:23:93                                    
+EncryptedBundle                        interface  src/services/bankingEncryptionService.ts:3:18                         
+EncryptedBankingData                   interface  src/services/bankingEncryptionService.ts:10:18                        
+BankingEncryptionResult                interface  src/services/bankingEncryptionService.ts:19:18                        
+PickupType                             type       src/utils/pickupTypeValidationUtils.ts:14:13                          
+PickupLockerData                       interface  src/utils/pickupTypeValidationUtils.ts:24:18                          
+SelectedLocker                         interface  src/utils/pickupTypeValidationUtils.ts:36:18                          
+EmailTemplateData                      type       src/utils/emailStyles.ts:6:15                                         
+WalletCreditNotificationData           interface  src/email-templates/templates/wallet-credit-notification.ts:3:18      
+SellerCreditNotificationData           interface  src/email-templates/templates/seller-credit-notification.ts:3:18      
+DenialEmailData                        interface  src/email-templates/templates/denial.ts:3:18                          
+PendingCommitEmailData                 interface  src/email-templates/templates/pending-commit.ts:3:18                  
+OrderDeclinedBuyerData                 interface  src/email-templates/templates/order-declined-buyer.ts:3:18            
+OrderDeclinedSellerData                interface  src/email-templates/templates/order-declined-seller.ts:3:18           
+OrderConfirmedBuyerData                interface  src/email-templates/templates/order-confirmed-buyer.ts:3:18           
+OrderConfirmedSellerData               interface  src/email-templates/templates/order-confirmed-seller.ts:3:18          
+DeliveryConfirmationRequestData        interface  src/email-templates/templates/delivery-confirmation-request.ts:3:18   
+DeliveryConfirmedBuyerData             interface  src/email-templates/templates/delivery-confirmed-buyer.ts:3:18        
+DeliveryComplaintAcknowledgmentBuyerΓÇª  interface  ΓÇªl-templates/templates/delivery-complaint-acknowledgment-buyer.ts:3:18
+DeliveryComplaintNotificationSellerDΓÇª  interface  ΓÇªil-templates/templates/delivery-complaint-notification-seller.ts:3:18
+SellerWaitingForDeliveryConfirmationΓÇª  interface  ΓÇª-templates/templates/seller-waiting-for-delivery-confirmation.ts:3:18
+PaymentOnTheWayBankTransferData        interface  src/email-templates/templates/payment-on-the-way-bank-transfer.ts:3:18
+PayoutRequest                          interface  src/services/payoutService.ts:4:18                                    
+CreatePayoutRequestData                interface  src/services/payoutService.ts:16:18                                   
+PayoutResult                           interface  src/services/payoutService.ts:21:18                                   
+[93m[4mDuplicate exports[24m[39m (15)
+GoogleMapsProvider|default                                 src/contexts/GoogleMapsContext.tsx             
+logError|logDatabaseError                                  src/utils/errorUtils.ts                        
+getErrorMessage|getUserErrorMessage                        src/utils/errorUtils.ts                        
+PaystackSubaccountService|default                          src/services/paystackSubaccountService.ts      
+useCommit|default                                          src/hooks/useCommit.ts                         
+fallbackAddressService|default                             src/services/fallbackAddressService.ts         
+SOUTH_AFRICAN_UNIVERSITIES|ALL_SOUTH_AFRICAN_UNIVERSITIES  src/constants/universities.ts                  
+ManualAddressInput|default                                 src/components/ManualAddressInput.tsx          
+OrderCancellationService|default                           src/services/orderCancellationService.ts       
+useBanking|default                                         src/hooks/useBanking.ts                        
+BankingDecryptionService|default                           src/services/bankingDecryptionService.ts       
+getPickupPointLocations|getBobGoLocations                  src/services/bobgoLocationsService.ts          
+LoadingSpinner|default                                     src/components/LoadingSpinner.tsx              
+BankingEncryptionService|default                           src/services/bankingEncryptionService.ts       
+PaymentErrorHandler|default                                src/components/payments/PaymentErrorHandler.tsx
+[33m[4mConfiguration hints[24m (1)[39m

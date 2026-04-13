@@ -951,48 +951,6 @@ export type Database = {
           },
         ]
       }
-      cart_abandonment_logs: {
-        Row: {
-          created_at: string | null
-          email_sent_at: string | null
-          id: string
-          item_ids: string[]
-          item_prices: number[]
-          item_titles: string[]
-          recovered_at: string | null
-          total_value: number | null
-          user_email: string
-          user_id: string | null
-          user_name: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          email_sent_at?: string | null
-          id?: string
-          item_ids?: string[]
-          item_prices?: number[]
-          item_titles?: string[]
-          recovered_at?: string | null
-          total_value?: number | null
-          user_email: string
-          user_id?: string | null
-          user_name?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          email_sent_at?: string | null
-          id?: string
-          item_ids?: string[]
-          item_prices?: number[]
-          item_titles?: string[]
-          recovered_at?: string | null
-          total_value?: number | null
-          user_email?: string
-          user_id?: string | null
-          user_name?: string | null
-        }
-        Relationships: []
-      }
       cashout_request: {
         Row: {
           affiliate_id: string
@@ -1175,7 +1133,6 @@ export type Database = {
           buyer_id: string
           created_at: string
           id: string
-          last_message_at: string | null
           listing_id: string | null
           seller_id: string
           status: string
@@ -1185,7 +1142,6 @@ export type Database = {
           buyer_id: string
           created_at?: string
           id?: string
-          last_message_at?: string | null
           listing_id?: string | null
           seller_id: string
           status?: string
@@ -1195,7 +1151,6 @@ export type Database = {
           buyer_id?: string
           created_at?: string
           id?: string
-          last_message_at?: string | null
           listing_id?: string | null
           seller_id?: string
           status?: string
@@ -1423,11 +1378,9 @@ export type Database = {
       messages: {
         Row: {
           content: string | null
-          content_encrypted: string | null
           conversation_id: string
           created_at: string
           id: string
-          is_encrypted: boolean
           is_flagged: boolean
           media_type: string | null
           media_url: string | null
@@ -1436,11 +1389,9 @@ export type Database = {
         }
         Insert: {
           content?: string | null
-          content_encrypted?: string | null
           conversation_id: string
           created_at?: string
           id?: string
-          is_encrypted?: boolean
           is_flagged?: boolean
           media_type?: string | null
           media_url?: string | null
@@ -1449,11 +1400,9 @@ export type Database = {
         }
         Update: {
           content?: string | null
-          content_encrypted?: string | null
           conversation_id?: string
           created_at?: string
           id?: string
-          is_encrypted?: boolean
           is_flagged?: boolean
           media_type?: string | null
           media_url?: string | null
@@ -1571,8 +1520,6 @@ export type Database = {
           delivery_status: string | null
           delivery_type: string | null
           id: string
-          item_id: string | null
-          item_type: string | null
           items: Json
           metadata: Json | null
           order_id: string | null
@@ -1586,7 +1533,6 @@ export type Database = {
           pickup_locker_location_id: string | null
           pickup_locker_provider_slug: string | null
           pickup_type: string | null
-          receipt_html: string | null
           refund_reference: string | null
           refund_status: string | null
           refunded_at: string | null
@@ -1601,7 +1547,6 @@ export type Database = {
           seller_phone_number: string | null
           shipping_address_encrypted: string | null
           status: string
-          tcg_shipment_id: string | null
           total_amount: number | null
           total_refunded: number | null
           tracking_data: Json | null
@@ -1632,8 +1577,6 @@ export type Database = {
           delivery_status?: string | null
           delivery_type?: string | null
           id?: string
-          item_id?: string | null
-          item_type?: string | null
           items?: Json
           metadata?: Json | null
           order_id?: string | null
@@ -1647,7 +1590,6 @@ export type Database = {
           pickup_locker_location_id?: string | null
           pickup_locker_provider_slug?: string | null
           pickup_type?: string | null
-          receipt_html?: string | null
           refund_reference?: string | null
           refund_status?: string | null
           refunded_at?: string | null
@@ -1662,7 +1604,6 @@ export type Database = {
           seller_phone_number?: string | null
           shipping_address_encrypted?: string | null
           status?: string
-          tcg_shipment_id?: string | null
           total_amount?: number | null
           total_refunded?: number | null
           tracking_data?: Json | null
@@ -1693,8 +1634,6 @@ export type Database = {
           delivery_status?: string | null
           delivery_type?: string | null
           id?: string
-          item_id?: string | null
-          item_type?: string | null
           items?: Json
           metadata?: Json | null
           order_id?: string | null
@@ -1708,7 +1647,6 @@ export type Database = {
           pickup_locker_location_id?: string | null
           pickup_locker_provider_slug?: string | null
           pickup_type?: string | null
-          receipt_html?: string | null
           refund_reference?: string | null
           refund_status?: string | null
           refunded_at?: string | null
@@ -1723,7 +1661,6 @@ export type Database = {
           seller_phone_number?: string | null
           shipping_address_encrypted?: string | null
           status?: string
-          tcg_shipment_id?: string | null
           total_amount?: number | null
           total_refunded?: number | null
           tracking_data?: Json | null
