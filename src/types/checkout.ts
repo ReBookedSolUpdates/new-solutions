@@ -67,7 +67,7 @@ export interface DeliveryOption {
   price: number;
   estimated_days: number;
   description: string;
-  zone_type?: "local" | "provincial" | "national";
+  zone_type?: "local" | "provincial" | "national" | "locker";
   provider_name?: string;
   provider_slug?: string;
   service_level_code?: string;

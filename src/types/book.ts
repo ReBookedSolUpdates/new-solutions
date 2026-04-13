@@ -17,6 +17,7 @@ export interface Book {
   insidePages?: string;
   additionalImages?: string[];
   sold: boolean;
+  status?: string;
   createdAt: string;
   itemType: "textbook" | "reader" | "uniform" | "school_supply";
   parcelSize?: 'extra_small' | 'small' | 'medium' | 'large' | 'extra_large';

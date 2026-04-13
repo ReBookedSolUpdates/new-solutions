@@ -136,7 +136,6 @@ const FallbackAddressInput: React.FC<FallbackAddressInputProps> = ({
       <ManualAddressInput
         onAddressSelect={handleManualAddressSelect}
         label={undefined}
-        placeholder={placeholder}
         required={required}
         defaultValue={{
           formattedAddress: defaultValue?.formattedAddress || "",

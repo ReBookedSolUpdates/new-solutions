@@ -149,7 +149,7 @@ export default function BankingForm({ onSuccess, onCancel }: BankingFormProps) {
               bank_code: branchCode,
               account_number_masked: `****${formData.accountNumber.slice(-4)}`
             }
-          }
+          } as any
         })
         .eq("id", session.user.id);
 

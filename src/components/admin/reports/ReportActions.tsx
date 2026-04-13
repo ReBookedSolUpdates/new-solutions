@@ -28,6 +28,7 @@ interface Report {
   book_title: string;
   seller_name: string;
   reason: string;
+  description?: string;
   status: "pending" | "resolved" | "dismissed";
   created_at: string;
   reporter_user_id: string;
