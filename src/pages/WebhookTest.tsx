@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Mail, Lock, User, Loader2, Phone } from "lucide-react";
 import Layout from "@/components/Layout";
 import { Input } from "@/components/ui/input";

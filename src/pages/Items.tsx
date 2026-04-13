@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef, useMemo } from "react";
+import React, { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import Layout from "@/components/Layout";
 import SEO from "@/components/SEO";
