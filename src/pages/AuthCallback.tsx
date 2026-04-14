@@ -76,9 +76,25 @@ const AuthCallback = () => {
     }
     const handleAuthCallback = async () => {
       try {
+        // Helper to extract params from multiple sources
+        const getParam = (name: string) => {
+          let value = searchParams.get(name);
+          if (value) return value;
+          value = new URLSearchParams(window.location.hash.substring(1)).get(name);
+          if (value) return value;
+          const fullUrl = window.location.href;
+          const decodedUrl = decodeURIComponent(fullUrl);
+          const regex = new RegExp(`[?&#]${name}=([^&#]*)`);
+          const match = decodedUrl.match(regex);
+          return match ? match[1] : null;
+        };
+        const isRecoveryHint = () => {
+          const r = (getParam("recovery") || "").toLowerCase();
+          const flow = (getParam("flow") || "").toLowerCase();
+          return r === "1" || r === "true" || flow === "recovery";
+        };
 
         // FIRST: Check if Supabase has already authenticated the user automatically
-        // This happens in many cases where the callback URL contains valid tokens
         const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
 
         if (!sessionError && sessionData.session && sessionData.user) {
