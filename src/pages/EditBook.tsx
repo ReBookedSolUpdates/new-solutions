@@ -102,7 +102,8 @@ const EditBook = () => {
             return;
           }
 
-          const itemType = bookData.itemType || "textbook";
+          const rawItemType = bookData.itemType || "textbook";
+          const itemType: "textbook" | "reader" = rawItemType === "reader" ? "reader" : "textbook";
           setBookItemType(itemType);
 
           // Determine book type from item data
@@ -121,13 +122,13 @@ const EditBook = () => {
             price: bookData.price,
             condition: bookData.condition || "Good",
             category: bookData.category,
-            itemType: itemType,
+            itemType: itemType as "textbook" | "reader",
             grade: (bookData as any).grade || "",
             universityYear: (bookData as any).universityYear || "",
             university: (bookData as any).university || "",
             genre: (bookData as any).genre || "",
             quantity: bookData.availableQuantity || 1,
-            curriculum: bookData.curriculum,
+            curriculum: (bookData.curriculum || undefined) as "CAPS" | "Cambridge" | "IEB" | undefined,
             isbn: (bookData as any).isbn || "",
           });
 
@@ -326,7 +327,7 @@ const EditBook = () => {
           <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
               <BookInformationForm
-                formData={formData}
+                formData={{ ...formData, imageUrl: bookImages.frontCover || "" } as any}
                 errors={errors}
                 onInputChange={handleInputChange}
                 showAIWarning={false}
@@ -334,14 +335,14 @@ const EditBook = () => {
 
               <div className="space-y-3 md:space-y-4">
                 <PricingSection
-                  formData={formData}
+                  formData={{ ...formData, imageUrl: bookImages.frontCover || "" } as any}
                   errors={errors}
                   onInputChange={handleInputChange}
                 />
 
                 <BookTypeSection
                   bookType={bookType}
-                  formData={formData}
+                  formData={{ ...formData, imageUrl: bookImages.frontCover || "" } as any}
                   errors={errors}
                   onBookTypeChange={handleBookTypeChange}
                   onSelectChange={handleSelectChange}

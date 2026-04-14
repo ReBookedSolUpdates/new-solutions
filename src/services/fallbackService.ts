@@ -299,7 +299,3 @@ export function useServiceStatus() {
   return { ...status, checkStatus };
 }
 
-// TypeScript import for React
-declare global {
-  const React: typeof import("react");
-}
