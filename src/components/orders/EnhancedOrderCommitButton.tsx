@@ -504,6 +504,26 @@ const EnhancedOrderCommitButton: React.FC<EnhancedOrderCommitButtonProps> = ({
                       </span>
                     </div>
                     <p className="text-xs text-emerald-700 mt-1">{selectedLocker.address}</p>
+                    {selectedLocker.trading_hours && (
+                      <div className="mt-2 pt-2 border-t border-emerald-100">
+                        <span className="text-[10px] font-bold text-emerald-600 uppercase tracking-wider block mb-1">Hours</span>
+                        <p className="text-xs text-emerald-700 leading-relaxed whitespace-pre-wrap">
+                          {selectedLocker.trading_hours}
+                        </p>
+                      </div>
+                    )}
+                    {selectedLocker.available_compartment_sizes && selectedLocker.available_compartment_sizes.length > 0 && (
+                      <div className="flex flex-col gap-1 mt-3 pt-2 border-t border-emerald-100">
+                        <span className="text-[10px] font-bold text-emerald-600 uppercase tracking-wider">Available Sizes</span>
+                        <div className="flex flex-wrap gap-1">
+                          {selectedLocker.available_compartment_sizes.map((size: string) => (
+                            <Badge key={size} variant="outline" className="text-[9px] px-1.5 py-0 h-4 border-emerald-200 text-emerald-700 bg-white/50">
+                              {size}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 )}
               </div>

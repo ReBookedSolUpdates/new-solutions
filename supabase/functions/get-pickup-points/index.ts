@@ -5,10 +5,7 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
 };
 
-const IS_PRODUCTION = Deno.env.get("VITE_PRODUCTION") === "true";
-const TCG_API_URL = IS_PRODUCTION 
-  ? Deno.env.get("TCG_BASE_URL") 
-  : (Deno.env.get("SANDBOX_TCG_BASE_URL") || Deno.env.get("TCG_BASE_URL"));
+const TCG_API_URL = Deno.env.get("TCG_BASE_URL");
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -27,22 +24,20 @@ serve(async (req) => {
 
     // Pickup points use TCG API
     const TCG_API_KEY = Deno.env.get("TCG_API_KEY");
-    const SANDBOX_TCG_API_KEY = Deno.env.get("SANDBOX_TCG_API_KEY");
-
     const apiUrl = TCG_API_URL;
-    const apiKey = IS_PRODUCTION ? TCG_API_KEY : (SANDBOX_TCG_API_KEY || TCG_API_KEY);
+    const apiKey = TCG_API_KEY;
     const providerName = "The Courier Guy";
 
     if (!apiUrl) {
       return new Response(
-        JSON.stringify({ success: false, error: `${IS_PRODUCTION ? "TCG_BASE_URL" : "SANDBOX_TCG_BASE_URL"} is not configured` }),
+        JSON.stringify({ success: false, error: "TCG_BASE_URL is not configured" }),
         { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
     if (!apiKey) {
       return new Response(
-        JSON.stringify({ success: false, error: `${IS_PRODUCTION ? "TCG_API_KEY" : "SANDBOX_TCG_API_KEY"} is not configured` }),
+        JSON.stringify({ success: false, error: "TCG_API_KEY is not configured" }),
         { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }

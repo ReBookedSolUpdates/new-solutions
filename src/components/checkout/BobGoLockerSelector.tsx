@@ -343,24 +343,24 @@ const PudoLockerSelector: React.FC<PudoLockerSelectorProps> = ({
                   {/* Content Section */}
                   <div className="flex-1 w-full min-w-0">
                   {/* Header Section with Name and Badge */}
-                  <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
-                    <h4 className="font-bold text-base text-gray-900 flex items-center gap-1.5 truncate">
+                  <div className="flex flex-col items-center text-center space-y-2 mb-3">
+                    <h4 className="font-bold text-gray-900 group-hover:text-book-600 transition-colors text-base flex items-center justify-center gap-1.5">
                       <MapPin className="h-4 w-4 text-book-600 flex-shrink-0" />
                       {location.name || location.human_name || location.location_name || location.title || `Locker ${index + 1}`}
                     </h4>
-                    <div className="flex items-center gap-2">
+                    <div className="flex flex-wrap justify-center items-center gap-1.5">
                       {location.pickup_point_provider_name && (
-                        <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200 h-5 px-1.5 text-[10px] uppercase font-bold tracking-wider">
+                        <Badge variant="outline" className="bg-blue-50/50 text-blue-700 border-blue-200 h-5 px-2 text-[9px] uppercase font-bold tracking-wider">
                           {location.pickup_point_provider_name}
                         </Badge>
                       )}
                       {location.type && (
-                        <Badge variant="secondary" className="bg-book-50 text-book-700 hover:bg-book-100 border-none h-5 px-1.5 text-[10px] uppercase font-bold tracking-wider">
+                        <Badge variant="secondary" className="bg-book-50/50 text-book-700 border-none h-5 px-2 text-[9px] uppercase font-bold tracking-wider">
                           {location.type}
                         </Badge>
                       )}
                       {isSelected && (
-                        <Badge className="bg-green-100 text-green-700 border-none h-5 px-1.5 text-[10px] uppercase font-bold">
+                        <Badge className="bg-green-100/50 text-green-700 border-none h-5 px-2 text-[9px] uppercase font-bold">
                           Selected
                         </Badge>
                       )}
@@ -369,13 +369,13 @@ const PudoLockerSelector: React.FC<PudoLockerSelectorProps> = ({
 
                   {/* Main Content Grid - More Compact */}
                   <div className="space-y-2">
-                    {/* Address & Hours Row */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2">
+                    {/* Address & Hours Row - Vertical Stack and Centered */}
+                    <div className="flex flex-col items-center text-center gap-y-3">
                       {/* Full Address */}
                       {(location.full_address || location.address) && (
-                        <div className="min-w-0">
-                          <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-0.5">Address</p>
-                          <p className="text-xs text-gray-600 line-clamp-2 leading-relaxed">
+                        <div className="w-full">
+                          <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Address</p>
+                          <p className="text-xs text-gray-600 leading-relaxed font-medium px-2">
                             {formatAddress(location.full_address || location.address)}
                           </p>
                         </div>
@@ -383,30 +383,30 @@ const PudoLockerSelector: React.FC<PudoLockerSelectorProps> = ({
 
                       {/* Operating Hours */}
                       {location.trading_hours && (
-                        <div className="min-w-0">
-                          <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider flex items-center gap-1 mb-0.5">
-                            <Clock className="h-3.5 w-3.5" /> Hours
+                        <div className="w-full pt-2 border-t border-gray-50/50 flex flex-col items-center">
+                          <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider flex items-center justify-center gap-1 mb-1.5">
+                            <Clock className="h-3.5 w-3.5" /> Operating Hours
                           </p>
-                          <p className="text-xs text-gray-600 line-clamp-1">
+                          <p className="text-xs text-gray-600 leading-relaxed whitespace-pre-wrap bg-gray-50/30 p-2.5 rounded-md border border-gray-100/50 w-full italic">
                             {location.trading_hours}
                           </p>
                         </div>
                       )}
                     </div>
 
-                    {/* ID and Details Row */}
-                    <div className="flex flex-wrap gap-x-4 gap-y-2 py-2 border-y border-gray-50">
+                    {/* ID and Details Row - Centered */}
+                    <div className="flex justify-center flex-wrap gap-x-6 gap-y-2 py-2 border-y border-gray-50">
                       {location.id && (
-                        <div className="flex flex-col">
+                        <div className="flex flex-col items-center">
                           <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">ID</span>
                           <span className="text-xs font-mono text-gray-600">{location.id}</span>
                         </div>
                       )}
 
                       {(location.distance || location.distance_km) && (
-                        <div className="flex flex-col">
+                        <div className="flex flex-col items-center">
                           <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Distance</span>
-                          <span className="text-xs text-gray-600 font-medium">
+                          <span className="text-xs text-gray-600 font-bold px-2 py-0.5 bg-gray-100/50 rounded-full">
                             {typeof location.distance === "number"
                               ? `${location.distance.toFixed(1)} km`
                               : typeof location.distance_km === "number"
@@ -417,8 +417,23 @@ const PudoLockerSelector: React.FC<PudoLockerSelectorProps> = ({
                       )}
                     </div>
 
-                    {/* Save to Profile Button - More Compact */}
-                    <div className="pt-1">
+                    {/* Compartment Sizes - Centered */}
+                    {location.available_compartment_sizes && location.available_compartment_sizes.length > 0 && (
+                      <div className="flex flex-col items-center gap-2 py-2 border-t border-gray-50">
+                        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Available Sizes</span>
+                        <div className="flex flex-wrap justify-center gap-1.5">
+                          {location.available_compartment_sizes.map((size: string) => (
+                            <Badge key={size} variant="outline" className="text-[9px] px-2 py-0 h-4.5 border-gray-200 text-gray-500 bg-white shadow-sm font-medium">
+                              {size}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Action Buttons Row - Centered */}
+                    <div className="flex justify-center flex-wrap gap-2 pt-1 border-t border-gray-50/50 mt-1">
+                      {/* Save to Profile Button */}
                       <Button
                         onClick={(e) => {
                           e.stopPropagation();
@@ -426,7 +441,7 @@ const PudoLockerSelector: React.FC<PudoLockerSelectorProps> = ({
                         }}
                         variant="outline"
                         size="sm"
-                        className="w-full sm:w-auto min-w-[140px] h-8 text-xs border-book-200 text-book-700 hover:bg-book-50 hover:border-book-300 rounded-lg font-medium"
+                        className="flex-1 max-w-[140px] h-8 text-[11px] border-book-200 text-book-700 hover:bg-book-50 hover:border-book-300 rounded-lg font-bold"
                       >
                         {savingLockerId === location.id ? (
                           <>
@@ -435,10 +450,25 @@ const PudoLockerSelector: React.FC<PudoLockerSelectorProps> = ({
                           </>
                         ) : (
                           <>
-                            <Save className="h-3 w-3 mr-2" />
-                            Save to Profile
+                            <Save className="h-3 w-3 mr-1.5" />
+                            Save
                           </>
                         )}
+                      </Button>
+
+                      {/* View on Google Maps Button */}
+                      <Button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          const url = `https://www.google.com/maps/search/?api=1&query=${location.latitude},${location.longitude}`;
+                          window.open(url, '_blank');
+                        }}
+                        variant="outline"
+                        size="sm"
+                        className="flex-1 max-w-[140px] h-8 text-[11px] border-gray-200 text-gray-600 hover:bg-gray-50 hover:border-gray-300 rounded-lg font-bold"
+                      >
+                        <MapPin className="h-3 w-3 mr-1.5 text-book-500" />
+                        Maps
                       </Button>
                     </div>
                   </div>
@@ -452,10 +482,13 @@ const PudoLockerSelector: React.FC<PudoLockerSelectorProps> = ({
 
       {/* No Locations Found */}
       {selectedAddress && locations.length === 0 && !isLoadingLocations && (
-        <Alert>
-          <Info className="h-4 w-4" />
-          <AlertDescription>
-            No Pudo locker locations available in this area. You can try searching a nearby suburb or major shopping center.
+        <Alert className="bg-amber-50 border-amber-200 border-2">
+          <Info className="h-5 w-5 text-amber-600" />
+          <AlertDescription className="text-amber-900 ml-2">
+            <p className="font-bold text-sm mb-1">No Pudo lockers found in this location.</p>
+            <p className="text-xs leading-relaxed">
+              If there are no lockers available in your area, please consider <strong>adding a door-to-door pickup address</strong> in your profile settings instead. This will allow couriers to collect directly from your home.
+            </p>
           </AlertDescription>
         </Alert>
       )}

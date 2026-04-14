@@ -352,6 +352,19 @@ const OrderManagementView: React.FC<OrderManagementViewProps> = () => {
           <span className="capitalize font-medium text-book-700">{deliveryProgress || "pending"}</span>
         </div>
 
+        {order.delivery_data?.available_compartment_sizes && Array.isArray(order.delivery_data.available_compartment_sizes) && order.delivery_data.available_compartment_sizes.length > 0 && (
+          <div className="pt-2 border-t border-book-50">
+            <div className="text-[10px] font-bold text-book-500 uppercase tracking-wider mb-1">Locker Sizes</div>
+            <div className="flex flex-wrap gap-1">
+              {order.delivery_data.available_compartment_sizes.map((size: string) => (
+                <Badge key={size} variant="outline" className="text-[9px] px-1.5 py-0 h-4 border-book-100 text-book-600 bg-white/50">
+                  {size}
+                </Badge>
+              ))}
+            </div>
+          </div>
+        )}
+
         {order.tracking_data?.events && Array.isArray(order.tracking_data.events) && order.tracking_data.events.length > 0 && (
           <div className="pt-1">
             <div className="text-xs text-book-600 font-medium mb-1">Recent events</div>

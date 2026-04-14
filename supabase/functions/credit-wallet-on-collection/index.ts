@@ -96,13 +96,13 @@ function generateSellerCreditEmailHTML(data: {
 <html>
 <head>
   <meta charset="utf-8">
-  <title>💰 Payment Received - Credit Added to Your Account</title>
+  <title>Payment Received - Credit Added to Your Account</title>
   ${EMAIL_STYLES}
 </head>
 <body>
   <div class="container">
     <div class="header">
-      <h1>💰 Payment Received!</h1>
+      <h1>Payment Received!</h1>
       <p>Your book has been delivered and credit has been added</p>
     </div>
 

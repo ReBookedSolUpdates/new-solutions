@@ -5,7 +5,7 @@ import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -469,28 +469,40 @@ const Profile = () => {
         <div className="mb-8">
           <Card>
             <CardContent className="pt-6">
-              <div className="flex flex-col md:flex-row items-center md:items-center gap-6">
-                <Avatar className="w-20 h-20">
-                  <AvatarFallback className="bg-book-100 text-book-600 text-xl font-semibold">
-                    {(
-                      (profile.full_name || profile.name || "U")
-                      .charAt(0)
-                      ?.toUpperCase()
-                    )}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="flex-1 space-y-3">
+              <div className="flex flex-col items-center text-center gap-6">
+                <div className="relative group">
+                  <Avatar className="w-24 h-24 border-2 border-book-100 shadow-md">
+                    <AvatarImage src={profilePictureUrl} className="object-cover" />
+                    <AvatarFallback className="bg-book-50 text-book-600 text-2xl font-bold">
+                      {(
+                        (profile.full_name || profile.name || "U")
+                        .charAt(0)
+                        ?.toUpperCase()
+                      )}
+                    </AvatarFallback>
+                  </Avatar>
+                  <Button
+                    onClick={() => setIsEditDialogOpen(true)}
+                    size="icon"
+                    variant="secondary"
+                    className="absolute -bottom-1 -right-1 h-8 w-8 rounded-full shadow-lg border-2 border-white scale-90 opacity-0 group-hover:opacity-100 transition-all"
+                  >
+                    <Edit className="h-4 w-4" />
+                  </Button>
+                </div>
+
+                <div className="space-y-4 w-full">
                   <div>
-                    <h1 className="text-3xl font-bold text-gray-900 text-left">
+                    <h1 className="text-3xl font-bold text-gray-900">
                       {profile.full_name || profile.name || "Anonymous User"}
                     </h1>
-                    <div className="flex items-center gap-4 text-sm text-gray-500 mt-1">
-                      <div className="flex items-center gap-1">
-                        <Mail className="w-4 h-4" />
+                    <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-gray-500 mt-2">
+                      <div className="flex items-center gap-1.5">
+                        <Mail className="w-4 h-4 text-book-400" />
                         {user.email}
                       </div>
-                      <div className="flex items-center gap-1">
-                        <Calendar className="w-4 h-4" />
+                      <div className="flex items-center gap-1.5">
+                        <Calendar className="w-4 h-4 text-book-400" />
                         Joined{" "}
                         {profile?.created_at
                           ? new Date(profile.created_at).toLocaleDateString("en-US", {
@@ -502,31 +514,42 @@ const Profile = () => {
                     </div>
                   </div>
 
-                  {/* Quick Stats */}
-                  <div className="flex flex-wrap gap-6">
-                    <div className="flex items-center gap-2">
-                      <Package className="w-4 h-4 text-book-600" />
-                      <span className="font-semibold">{stats.totalBooks}</span>
-                      <span className="text-gray-600">Items Listed</span>
+                  {/* Quick Stats - Centered */}
+                  <div className="flex flex-wrap justify-center gap-8 py-2">
+                    <div className="flex flex-col items-center">
+                      <div className="flex items-center gap-2 mb-1">
+                        <Package className="w-4 h-4 text-book-600" />
+                        <span className="text-xl font-bold text-gray-900">{stats.totalBooks}</span>
+                      </div>
+                      <span className="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Items Listed</span>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <TrendingUp className="w-4 h-4 text-green-600" />
-                      <span className="font-semibold">
-                        R{stats.totalValue.toFixed(0)}
-                      </span>
-                      <span className="text-gray-600">Total Value</span>
+                    
+                    <div className="flex flex-col items-center">
+                      <div className="flex items-center gap-2 mb-1">
+                        <TrendingUp className="w-4 h-4 text-green-600" />
+                        <span className="text-xl font-bold text-gray-900">R{stats.totalValue.toFixed(0)}</span>
+                      </div>
+                      <span className="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Total Value</span>
                     </div>
                   </div>
-                </div>
 
-                <div className="flex gap-2">
-                  <Button
-                    onClick={() => navigate("/create-listing")}
-                    className="bg-book-600 hover:bg-book-700"
-                  >
-                    <Plus className="w-4 h-4 mr-2" />
-                    List an Item
-                  </Button>
+                  <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+                    <Button
+                      onClick={() => navigate("/create-listing")}
+                      className="bg-book-600 hover:bg-book-700 h-10 px-6 font-semibold shadow-sm"
+                    >
+                      <Plus className="w-4 h-4 mr-2" />
+                      List an Item
+                    </Button>
+                    <Button
+                      onClick={() => setIsShareDialogOpen(true)}
+                      variant="outline"
+                      className="border-book-200 text-book-600 hover:bg-book-50 h-10 px-6 font-semibold"
+                    >
+                      <Share2 className="w-4 h-4 mr-2" />
+                      Share Profile
+                    </Button>
+                  </div>
                 </div>
               </div>
             </CardContent>

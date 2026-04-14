@@ -37,7 +37,7 @@ export const fetchSuggestions = async (searchInput: string): Promise<Suggestion[
   try {
     const { data: { session } } = await supabase.auth.getSession();
     const response = await fetch(
-      `${ENV.VITE_SUPABASE_URL}/functions/v1/autocomplete?input=${encodeURIComponent(searchInput)}`,
+      `${ENV.VITE_SUPABASE_URL}/functions/v1/address-autocomplete?input=${encodeURIComponent(searchInput)}`,
       {
         headers: {
           'Authorization': `Bearer ${session?.access_token || ENV.VITE_SUPABASE_ANON_KEY}`,
@@ -60,14 +60,14 @@ export const fetchSuggestions = async (searchInput: string): Promise<Suggestion[
 
 /**
  * Fetch parsed address details from place_id
- * Uses correct endpoint: /autocomplete-details (not /address-place-details)
+ * Uses correct endpoint: /address-place-details
  * Returns all parsed address components ready for auto-fill
  */
 export const fetchAddressDetails = async (placeId: string): Promise<AddressDetails | null> => {
   try {
     const { data: { session } } = await supabase.auth.getSession();
     const response = await fetch(
-      `${ENV.VITE_SUPABASE_URL}/functions/v1/autocomplete-details?place_id=${encodeURIComponent(placeId)}`,
+      `${ENV.VITE_SUPABASE_URL}/functions/v1/address-place-details?place_id=${encodeURIComponent(placeId)}`,
       {
         headers: {
           'Authorization': `Bearer ${session?.access_token || ENV.VITE_SUPABASE_ANON_KEY}`,

@@ -5,10 +5,7 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
 };
 
-const IS_PRODUCTION = Deno.env.get("VITE_PRODUCTION") === "true";
-const TCG_API_URL = IS_PRODUCTION 
-  ? Deno.env.get("TCG_BASE_URL") 
-  : (Deno.env.get("SANDBOX_TCG_BASE_URL") || Deno.env.get("TCG_BASE_URL"));
+const TCG_API_URL = Deno.env.get("TCG_BASE_URL");
 
 interface AddressInput {
   type?: string;
@@ -167,20 +164,18 @@ serve(async (req) => {
       }
     }
 
-    const TCG_API_KEY_PROD = Deno.env.get("TCG_API_KEY");
-    const TCG_API_KEY_SANDBOX = Deno.env.get("SANDBOX_TCG_API_KEY");
-    const TCG_API_KEY = IS_PRODUCTION ? TCG_API_KEY_PROD : (TCG_API_KEY_SANDBOX || TCG_API_KEY_PROD);
+    const TCG_API_KEY = Deno.env.get("TCG_API_KEY");
 
     if (!TCG_API_URL) {
       return new Response(
-        JSON.stringify({ success: false, error: `${IS_PRODUCTION ? "TCG_BASE_URL" : "SANDBOX_TCG_BASE_URL"} is not configured` }),
+        JSON.stringify({ success: false, error: "TCG_BASE_URL is not configured" }),
         { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
     if (!TCG_API_KEY || TCG_API_KEY.length < 5) {
       return new Response(
-        JSON.stringify({ success: false, error: `${IS_PRODUCTION ? "TCG_API_KEY" : "SANDBOX_TCG_API_KEY"} is not configured` }),
+        JSON.stringify({ success: false, error: "TCG_API_KEY is not configured" }),
         { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
@@ -240,7 +235,7 @@ serve(async (req) => {
         success: true,
         rates: allRates,
         providers_queried: ["The Courier Guy"],
-        mode: IS_PRODUCTION ? "production" : "sandbox",
+        mode: "production",
         errors: errors.length > 0 ? errors : undefined,
       }),
       { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }

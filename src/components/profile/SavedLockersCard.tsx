@@ -167,9 +167,9 @@ const SavedLockersCard = forwardRef<
           {/* Details Grid */}
           <div className="space-y-3">
             {/* Address */}
-            <div className="min-w-0">
-              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-0.5">Address</p>
-              <p className="text-sm text-gray-600 leading-relaxed">
+            <div className="min-w-0 text-center">
+              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Address</p>
+              <p className="text-sm text-gray-600 leading-relaxed font-medium px-4">
                 {formatAddress(locker.full_address || locker.address)}
               </p>
             </div>
@@ -177,46 +177,73 @@ const SavedLockersCard = forwardRef<
             <div className="grid grid-cols-2 gap-4 pt-2 border-t border-gray-50">
               {/* Provider */}
               {locker.pickup_point_provider_name && (
-                <div className="min-w-0">
-                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-0.5">Provider</p>
-                  <div className="flex items-center gap-1.5">
+                <div className="col-span-2 flex flex-col items-center text-center pt-2 border-t border-gray-50/50">
+                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Provider</p>
+                  <div className="flex items-center justify-center gap-1.5 grayscale opacity-70">
                     {locker.pickup_point_provider_logo_url && (
                       <img
                         src={locker.pickup_point_provider_logo_url}
                         alt="Provider"
-                        className="h-4 w-4 object-contain flex-shrink-0"
+                        className="h-3.5 w-3.5 object-contain flex-shrink-0"
                         onError={(e) => { e.currentTarget.style.display = 'none'; }}
                       />
                     )}
-                    <p className="text-xs text-gray-600 font-medium truncate">
+                    <p className="text-xs text-gray-500 font-medium">
                       {locker.pickup_point_provider_name}
                     </p>
                   </div>
                 </div>
               )}
 
-              {/* Hours */}
+              {/* Hours - Centered Full Width */}
               {locker.trading_hours && (
-                <div className="min-w-0">
-                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider flex items-center gap-1 mb-0.5">
-                    <Clock className="h-3 w-3" /> Hours
+                <div className="col-span-2 flex flex-col items-center pt-2 border-t border-gray-50/50">
+                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider flex items-center justify-center gap-1 mb-1.5">
+                    <Clock className="h-3 w-3" /> Operating Hours
                   </p>
-                  <p className="text-xs text-gray-600 truncate">
+                  <p className="text-xs text-gray-600 leading-relaxed whitespace-pre-wrap bg-gray-50/30 p-2.5 rounded-md border border-gray-100/50 w-full text-center italic">
                     {locker.trading_hours}
                   </p>
                 </div>
               )}
             </div>
+
+            {/* Compartment Sizes */}
+            {locker.available_compartment_sizes && locker.available_compartment_sizes.length > 0 && (
+              <div className="flex flex-col items-center gap-2 pt-2 border-t border-gray-50">
+                <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Available Sizes</span>
+                <div className="flex flex-wrap justify-center gap-1.5">
+                  {locker.available_compartment_sizes.map((size: string) => (
+                    <Badge key={size} variant="outline" className="text-[9px] px-2 py-0 h-4.5 border-gray-200 text-gray-500 bg-white shadow-sm font-medium">
+                      {size}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
-          {/* Remove Button */}
-          <div className="pt-2">
+          {/* Action Buttons */}
+          <div className="pt-2 flex gap-2">
+            <Button
+              onClick={() => {
+                const url = `https://www.google.com/maps/search/?api=1&query=${locker.latitude},${locker.longitude}`;
+                window.open(url, '_blank');
+              }}
+              variant="outline"
+              size="sm"
+              className="flex-1 border-gray-100 text-gray-600 hover:bg-gray-50 hover:border-gray-200 text-[11px] font-medium h-8 rounded-lg"
+            >
+              <MapPin className="h-3 w-3 mr-1.5 text-book-500" />
+              View on Maps
+            </Button>
+            
             <Button
               onClick={onDelete}
               disabled={isDeleting}
               variant="outline"
               size="sm"
-              className="w-full border-red-100 text-red-600 hover:bg-red-50 hover:border-red-200 text-xs font-medium h-8 rounded-lg"
+              className="flex-1 border-red-100 text-red-600 hover:bg-red-50 hover:border-red-200 text-[11px] font-medium h-8 rounded-lg"
             >
               {isDeleting ? (
                 <>
@@ -225,7 +252,7 @@ const SavedLockersCard = forwardRef<
                 </>
               ) : (
                 <>
-                  <Trash2 className="h-3 w-3 mr-2" />
+                  <Trash2 className="h-3 w-3 mr-1.5" />
                   Remove Locker
                 </>
               )}
