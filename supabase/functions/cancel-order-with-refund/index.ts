@@ -2,10 +2,30 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { corsHeaders } from "../_shared/cors.ts";
 import { parseRequestBody } from "../_shared/safe-body-parser.ts";
+import { createEmailTemplate } from "../_shared/email-templates.ts";
 
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const SUPABASE_SERVICE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 const SUPABASE_ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY")!;
+
+const IN_TRANSIT_TCG_LABELS = [
+  "collected",
+  "collected_from_sender",
+  "in_transit",
+  "out_for_delivery",
+  "in transit",
+  "out for delivery",
+  "ready_for_pickup",
+  "ready for pickup",
+  "delivered",
+  "collected_by_receiver",
+];
+
+const isShipmentBeyondPendingPickup = (status?: string | null): boolean => {
+  if (!status) return false;
+  const normalized = status.toLowerCase().replace(/-/g, "_").trim();
+  return IN_TRANSIT_TCG_LABELS.some((label) => normalized.includes(label));
+};
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -45,10 +65,11 @@ serve(async (req) => {
     const bodyResult = await parseRequestBody<{
       order_id: string;
       reason?: string;
+      cancelled_by?: "buyer" | "seller" | "admin";
     }>(req, corsHeaders);
     if (!bodyResult.success) return bodyResult.errorResponse!;
 
-    const { order_id, reason } = bodyResult.data!;
+    const { order_id, reason, cancelled_by } = bodyResult.data!;
 
     // Get order details with all fields needed
     const { data: order, error: orderError } = await supabase
@@ -84,17 +105,40 @@ serve(async (req) => {
       );
     }
 
-    // Check if order can be cancelled based on status
-    const blockedStatuses = ['collected', 'in transit', 'out for delivery', 'delivered'];
-    const orderStatus = (order.status || '').toLowerCase();
-    const deliveryStatus = (order.delivery_status || '').toLowerCase();
+    // Shipment status guard: track shipment before allowing cancellation.
+    let liveShipmentStatus = order.delivery_status || "";
+    if (order.tracking_number || order.id) {
+      try {
+        const trackUrl = `${SUPABASE_URL}/functions/v1/track-shipment`;
+        const trackResponse = await fetch(trackUrl, {
+          method: "POST",
+          headers: {
+            "Authorization": authHeader!,
+            "Content-Type": "application/json",
+            "apikey": SUPABASE_ANON_KEY,
+          },
+          body: JSON.stringify({
+            order_id: order.id,
+            tracking_reference: order.tracking_number,
+          }),
+        });
+        const trackJson = await trackResponse.json();
+        if (trackResponse.ok && trackJson?.success) {
+          liveShipmentStatus =
+            trackJson?.tracking?.shipments?.[0]?.status ||
+            trackJson?.tracking?.status ||
+            liveShipmentStatus;
+        }
+      } catch {
+        // Keep existing delivery status if tracking call fails.
+      }
+    }
 
-    if (blockedStatuses.includes(orderStatus) || blockedStatuses.includes(deliveryStatus)) {
-      const currentStatus = blockedStatuses.includes(orderStatus) ? order.status : order.delivery_status;
+    if (isShipmentBeyondPendingPickup(liveShipmentStatus) || isShipmentBeyondPendingPickup(order.status)) {
       return new Response(
         JSON.stringify({
           success: false,
-          error: `Your order is "${currentStatus}". Therefore you cannot cancel the order. Contact support for more assistance.`
+          error: "Order cannot be cancelled — item is already in transit",
         }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
@@ -208,6 +252,76 @@ serve(async (req) => {
       ]);
     } catch (notifError) {
       // Notification error - don't fail the whole operation
+    }
+
+    // STEP 5: Send cancellation emails to buyer and seller.
+    const actor =
+      cancelled_by ||
+      (order.buyer_id === user.id ? "buyer" : order.seller_id === user.id ? "seller" : "admin");
+    const actorText = actor === "buyer" ? "buyer" : actor === "seller" ? "seller" : "platform team";
+    const cancelReason = reason || "Order cancelled by user";
+
+    const buyerEmailHtml = createEmailTemplate(
+      {
+        title: "Order Cancelled and Refunded",
+        headerText: "Order Cancelled",
+        headerType: "warning",
+        headerSubtext: `Hello ${order.buyer_full_name || "there"},`,
+      },
+      `
+      <p>Your order has been cancelled by the <strong>${actorText}</strong>.</p>
+      <p><strong>Reason:</strong> ${cancelReason}</p>
+      <div class="info-box-success">
+        <p style="margin: 0;"><strong>Refund confirmed:</strong> ${refundAmount ? `R${Number(refundAmount).toFixed(2)}` : "Your full payment"} has been refunded.</p>
+      </div>
+      `
+    );
+
+    const sellerEmailHtml = createEmailTemplate(
+      {
+        title: "Order Cancelled",
+        headerText: "Order Cancelled",
+        headerType: "warning",
+        headerSubtext: `Hello ${order.seller_full_name || "there"},`,
+      },
+      `
+      <p>This order has been cancelled by the <strong>${actorText}</strong>.</p>
+      <p><strong>Reason:</strong> ${cancelReason}</p>
+      <p>The buyer refund has been processed.</p>
+      `
+    );
+
+    try {
+      if (order.buyer_email) {
+        await fetch(`${SUPABASE_URL}/functions/v1/send-email`, {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${SUPABASE_SERVICE_KEY}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            to: order.buyer_email,
+            subject: "Order Cancelled - Refund Confirmed",
+            html: buyerEmailHtml,
+          }),
+        });
+      }
+      if (order.seller_email) {
+        await fetch(`${SUPABASE_URL}/functions/v1/send-email`, {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${SUPABASE_SERVICE_KEY}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            to: order.seller_email,
+            subject: "Order Cancelled",
+            html: sellerEmailHtml,
+          }),
+        });
+      }
+    } catch {
+      // Non-blocking: cancellation should not fail due to email provider issues.
     }
 
     return new Response(

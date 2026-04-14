@@ -26,7 +26,7 @@ const HowItWorks = () => {
   ];
 
   return (
-    <section className="py-16 sm:py-24 bg-white">
+    <section className="py-12 sm:py-20 bg-white">
       <div className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4">
@@ -37,23 +37,22 @@ const HowItWorks = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4 max-w-6xl mx-auto">
           {steps.map((step, index) => (
             <div
               key={index}
-              className="relative bg-white rounded-lg border border-gray-200 p-8 transition-shadow hover:shadow-lg"
+              className="relative bg-white rounded-lg border border-gray-200 p-4 sm:p-5 transition-all duration-200 hover:shadow-md h-full flex flex-col"
             >
-              {/* Step number */}
-              <span className="text-3xl font-bold text-book-600 mb-4 block">
-                {step.number}
-              </span>
-
-              {/* Icon Container */}
-              <div className="w-12 h-12 bg-book-600 rounded-lg flex items-center justify-center mb-4">
-                <step.icon className="h-6 w-6 text-white" />
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-xl sm:text-2xl font-bold text-book-600 leading-none">
+                  {step.number}
+                </span>
+                <div className="w-9 h-9 sm:w-10 sm:h-10 bg-book-600 rounded-md flex items-center justify-center">
+                  <step.icon className="h-5 w-5 text-white" />
+                </div>
               </div>
 
-              <h3 className="text-lg font-bold text-gray-900 mb-3">
+              <h3 className="text-base font-bold text-gray-900 mb-2">
                 {step.title}
               </h3>
               <p className="text-gray-600 leading-relaxed text-sm">

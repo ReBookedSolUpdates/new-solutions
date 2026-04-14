@@ -48,6 +48,7 @@ export interface Book {
     email: string;
     createdAt?: string;
     full_name?: string;
+    is_away?: boolean;
   };
   [key: string]: any;
 }

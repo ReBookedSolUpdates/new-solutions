@@ -35,11 +35,19 @@ export class BankingService {
           .single();
 
         if (query.error && query.error.code === "42P01") {
-          const { data: profileData } = await supabase
+          let { data: profileData } = await supabase
             .from("profiles")
             .select("subaccount_code, preferences")
             .eq("id", userId)
             .single();
+          if (!profileData) {
+            const fallback = await supabase
+              .from("profiles")
+              .select("subaccount_code")
+              .eq("id", userId)
+              .single();
+            profileData = fallback.data as any;
+          }
 
           if (profileData?.subaccount_code) {
             return {
@@ -338,7 +346,7 @@ export class BankingService {
         .from("books")
         .select("id")
         .eq("seller_id", userId)
-        .eq("status", "available");
+        .eq("sold", false);
 
       const hasActiveBooks = (books?.length || 0) > 0;
 

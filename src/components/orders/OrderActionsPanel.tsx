@@ -103,6 +103,7 @@ const OrderActionsPanel: React.FC<OrderActionsPanelProps> = ({
         body: {
           order_id: order.id,
           reason: cancelReason || "Cancelled by Buyer",
+          cancelled_by: "buyer",
         },
       });
 
@@ -152,6 +153,7 @@ const OrderActionsPanel: React.FC<OrderActionsPanelProps> = ({
         body: {
           order_id: order.id,
           reason: cancelReason || "Cancelled by Seller",
+          cancelled_by: "seller",
         },
       });
 

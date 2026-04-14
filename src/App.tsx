@@ -63,6 +63,7 @@ import Tracking from "./pages/Tracking";
 import Report from "./pages/Report";
 import SellerProfile from "./pages/SellerProfile";
 import GettingStarted from "./pages/GettingStarted";
+import CategoryInfoPage from "./pages/CategoryInfoPage";
 
 
 // Other Pages
@@ -310,6 +311,7 @@ function AppRoutes() {
         <Route path="/shipping" element={<Shipping />} />
         <Route path="/tracking" element={<Tracking />} />
         <Route path="/getting-started" element={<GettingStarted />} />
+        <Route path="/category/:slug" element={<CategoryInfoPage />} />
 
         <Route path="/report" element={<Report />} />
         <Route path="/webhook-test" element={<WebhookTest />} />

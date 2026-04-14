@@ -55,13 +55,13 @@ const ProfileEditDialog = ({ isOpen, onClose }: ProfileEditDialogProps) => {
       const filePath = `${user.id}/${Math.random()}.${fileExt}`;
 
       const { error: uploadError } = await supabase.storage
-        .from("avatars")
-        .upload(filePath, file);
+        .from("user-profiles")
+        .upload(filePath, file, { upsert: true });
 
       if (uploadError) throw uploadError;
 
       const { data: { publicUrl } } = supabase.storage
-        .from("avatars")
+        .from("user-profiles")
         .getPublicUrl(filePath);
 
       setProfilePictureUrl(publicUrl);
@@ -99,7 +99,10 @@ const ProfileEditDialog = ({ isOpen, onClose }: ProfileEditDialogProps) => {
         .update({
           first_name: firstName.trim(),
           last_name: lastName.trim(),
+          full_name: `${firstName.trim()} ${lastName.trim()}`.trim(),
+          name: `${firstName.trim()} ${lastName.trim()}`.trim(),
           profile_picture_url: profilePictureUrl,
+          avatar_url: profilePictureUrl,
           updated_at: new Date().toISOString(),
         })
         .eq("id", user.id);

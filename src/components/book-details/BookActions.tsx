@@ -31,6 +31,7 @@ const BookActions = ({
   const isOwner = user?.id === book.seller?.id; // seller is an object with id
   const isSold = book.sold;
   const isPendingCommit = book.status === "pending_commit" || showCommitButton;
+  const isSellerAway = !!book.seller?.is_away;
 
   return (
     <Card className="sticky top-4">
@@ -94,19 +95,26 @@ const BookActions = ({
                 onClick={onBuyNow}
                 className="w-full bg-book-600 hover:bg-book-700"
                 size="lg"
+                disabled={isSellerAway}
               >
                 <CreditCard className="mr-2 h-4 w-4" />
-                Buy Now
+                {isSellerAway ? "Seller is currently away" : "Buy Now"}
               </Button>
               <Button
                 onClick={onAddToCart}
                 variant="outline"
                 className="w-full border-book-600 text-book-600 hover:bg-book-50"
                 size="lg"
+                disabled={isSellerAway}
               >
                 <ShoppingCart className="mr-2 h-4 w-4" />
                 Add to Cart
               </Button>
+              {isSellerAway && (
+                <p className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-md px-3 py-2">
+                  Seller is currently away. You can wishlist this item and we will notify you when they are back.
+                </p>
+              )}
             </div>
           )}
 

@@ -213,11 +213,20 @@ export class PaystackSubaccountService {
       }
 
       // Get profile and subaccount code
-      const { data: profileData, error: profileError } = await supabase
+      let { data: profileData, error: profileError } = await supabase
         .from("profiles")
         .select("subaccount_code, preferences")
         .eq("id", user.id)
         .single();
+      if (profileError && String(profileError.message || "").toLowerCase().includes("preferences")) {
+        const fallback = await supabase
+          .from("profiles")
+          .select("subaccount_code")
+          .eq("id", user.id)
+          .single();
+        profileData = fallback.data as any;
+        profileError = fallback.error as any;
+      }
 
       if (profileError || !profileData?.subaccount_code) {
         return { success: false, error: "No subaccount code found" };
@@ -357,11 +366,20 @@ export class PaystackSubaccountService {
 
       // First, check the profile table for subaccount_code
       debugLogger.info("paystackSubaccountService", "🔑 getUserSubaccountStatus: Checking profile table...");
-      const { data: profileData, error: profileError } = await supabase
+      let { data: profileData, error: profileError } = await supabase
         .from("profiles")
         .select("subaccount_code, preferences")
         .eq("id", userId)
         .single();
+      if (profileError && String(profileError.message || "").toLowerCase().includes("preferences")) {
+        const fallback = await supabase
+          .from("profiles")
+          .select("subaccount_code")
+          .eq("id", userId)
+          .single();
+        profileData = fallback.data as any;
+        profileError = fallback.error as any;
+      }
 
       if (profileError) {
         debugLogger.warn(

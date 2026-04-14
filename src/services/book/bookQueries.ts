@@ -86,16 +86,17 @@ export const getBooks = async (filters?: BookFilters): Promise<Book[]> => {
   try {
     const fetchTableData = async (table: string, tableFilters?: BookFilters): Promise<any[]> => {
       try {
-        let query = supabase
+        const buildQuery = (includeAway: boolean) => supabase
           .from(table)
           .select(`
             *,
             seller_profile:profiles!seller_id(
-              id, first_name, last_name, email, preferred_delivery_locker_data, pickup_address_encrypted, created_at
+              id, first_name, last_name, email, preferred_delivery_locker_data, pickup_address_encrypted, created_at${includeAway ? ", is_away" : ""}
             )
           `)
           .eq("sold", false)
           .order("created_at", { ascending: false });
+        let query = buildQuery(true);
 
         if (tableFilters) {
           if (tableFilters.search) {
@@ -118,7 +119,13 @@ export const getBooks = async (filters?: BookFilters): Promise<Book[]> => {
           if (tableFilters.maxPrice !== undefined) query = query.lte("price", tableFilters.maxPrice);
         }
 
-        const { data, error } = await query;
+        let { data, error } = await query;
+        if (error && String(error.message || "").toLowerCase().includes("is_away")) {
+          // Backward-compatible fallback for DBs that haven't run the away-mode migration yet.
+          const retry = await buildQuery(false);
+          data = retry.data;
+          error = retry.error;
+        }
         if (error) {
           logDetailedError(`${table} query failed`, error);
           return [];
@@ -159,6 +166,8 @@ export const getBooks = async (filters?: BookFilters): Promise<Book[]> => {
         preferred_delivery_locker_data: profile.preferred_delivery_locker_data,
         has_pickup_address: !!profile.pickup_address_encrypted,
         created_at: profile.created_at
+        ,
+        is_away: !!profile.is_away
       } : null;
 
       return mapBookFromDatabase({
@@ -252,7 +261,8 @@ const getUserBooksWithFallback = async (userId: string): Promise<Book[]> => {
         email: profile.email || "",
         preferred_delivery_locker_data: profile.preferred_delivery_locker_data,
         has_pickup_address: !!profile.pickup_address_encrypted,
-        created_at: profile.created_at
+        created_at: profile.created_at,
+        is_away: !!profile.is_away
       } : { id: userId, name: "Anonymous", email: "" };
 
       return mapBookFromDatabase({ ...item, profiles: mappedProfile });

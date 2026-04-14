@@ -65,13 +65,13 @@ const GettingStarted = () => {
             <p className="text-lg text-gray-600 max-w-3xl leading-relaxed mb-6">
               Whether you're selling textbooks or buying affordable editions, we've made the process simple and secure. Follow these guides to get started in minutes.
             </p>
-            <div className="flex flex-wrap gap-3">
-              <Button asChild size="lg" className="bg-book-600 text-white hover:bg-book-700 shadow-md">
+            <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3">
+              <Button asChild size="lg" className="bg-book-600 text-white hover:bg-book-700 shadow-md w-full sm:w-auto justify-center">
                 <a href="#seller" aria-label="Jump to Becoming a Seller">
                   <Package className="mr-2 h-5 w-5" /> I'm selling
                 </a>
               </Button>
-              <Button asChild size="lg" variant="outline" className="border-gray-300 text-gray-700 hover:bg-gray-50">
+              <Button asChild size="lg" variant="outline" className="border-gray-300 text-gray-700 hover:bg-gray-50 w-full sm:w-auto justify-center">
                 <a href="#buyer" aria-label="Jump to Becoming a Buyer">
                   <ShoppingCart className="mr-2 h-5 w-5" /> I'm buying
                 </a>
@@ -80,11 +80,11 @@ const GettingStarted = () => {
           </div>
 
           {/* Quick visual guide */}
-          <div className="bg-white rounded-lg border border-gray-200 shadow-md p-6 sm:p-8">
+          <div className="bg-white rounded-lg border border-gray-200 shadow-md p-4 sm:p-8">
             <h2 className="text-lg font-semibold text-gray-900 mb-6">How it works at a glance</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {/* Seller steps */}
-              <div className="rounded-lg border border-gray-200 bg-white p-4 hover:shadow-md transition">
+              <div className="rounded-lg border border-gray-200 bg-white p-4 min-h-[126px] hover:shadow-md transition">
                 <div className="flex items-center gap-3 text-gray-900 mb-2">
                   <div className="p-2 bg-book-100 rounded-lg">
                     <Package className="h-5 w-5 text-book-700" />
@@ -93,7 +93,7 @@ const GettingStarted = () => {
                 </div>
                 <p className="text-gray-600 text-sm">Add photos, price, and condition details</p>
               </div>
-              <div className="rounded-lg border border-gray-200 bg-white p-4 hover:shadow-md transition">
+              <div className="rounded-lg border border-gray-200 bg-white p-4 min-h-[126px] hover:shadow-md transition">
                 <div className="flex items-center gap-3 text-gray-900 mb-2">
                   <div className="p-2 bg-book-100 rounded-lg">
                     <CheckCircle className="h-5 w-5 text-book-700" />
@@ -102,7 +102,7 @@ const GettingStarted = () => {
                 </div>
                 <p className="text-gray-600 text-sm">Approve the sale within 48 hours</p>
               </div>
-              <div className="rounded-lg border border-gray-200 bg-white p-4 hover:shadow-md transition">
+              <div className="rounded-lg border border-gray-200 bg-white p-4 min-h-[126px] hover:shadow-md transition">
                 <div className="flex items-center gap-3 text-gray-900 mb-2">
                   <div className="p-2 bg-book-100 rounded-lg">
                     <Truck className="h-5 w-5 text-book-700" />
@@ -112,7 +112,7 @@ const GettingStarted = () => {
                 <p className="text-gray-600 text-sm">Print your waybill, courier collects</p>
               </div>
               {/* Buyer steps */}
-              <div className="rounded-lg border border-gray-200 bg-white p-4 hover:shadow-md transition">
+              <div className="rounded-lg border border-gray-200 bg-white p-4 min-h-[126px] hover:shadow-md transition">
                 <div className="flex items-center gap-3 text-gray-900 mb-2">
                   <div className="p-2 bg-book-100 rounded-lg">
                     <BookOpen className="h-5 w-5 text-book-700" />
@@ -121,7 +121,7 @@ const GettingStarted = () => {
                 </div>
                 <p className="text-gray-600 text-sm">Find the right edition and price</p>
               </div>
-              <div className="rounded-lg border border-gray-200 bg-white p-4 hover:shadow-md transition">
+              <div className="rounded-lg border border-gray-200 bg-white p-4 min-h-[126px] hover:shadow-md transition">
                 <div className="flex items-center gap-3 text-gray-900 mb-2">
                   <div className="p-2 bg-book-100 rounded-lg">
                     <CreditCard className="h-5 w-5 text-book-700" />
@@ -130,7 +130,7 @@ const GettingStarted = () => {
                 </div>
                 <p className="text-gray-600 text-sm">Secure checkout with BobPay</p>
               </div>
-              <div className="rounded-lg border border-gray-200 bg-white p-4 hover:shadow-md transition">
+              <div className="rounded-lg border border-gray-200 bg-white p-4 min-h-[126px] hover:shadow-md transition">
                 <div className="flex items-center gap-3 text-gray-900 mb-2">
                   <div className="p-2 bg-book-100 rounded-lg">
                     <ShieldCheck className="h-5 w-5 text-book-700" />

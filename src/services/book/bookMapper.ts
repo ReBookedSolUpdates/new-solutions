@@ -75,6 +75,7 @@ export const mapBookFromDatabase = (bookData: any): Book => {
       name: (profile && (profile as any).name) || `User ${bookData.seller_id.slice(0, 8)}`,
       email: profile?.email || "",
       createdAt: (profile as any)?.created_at || undefined,
+      is_away: !!(profile as any)?.is_away,
     },
   };
 };

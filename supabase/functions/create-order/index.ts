@@ -118,7 +118,7 @@ serve(async (req) => {
         .single(),
       supabase
         .from("profiles")
-        .select("id, full_name, name, first_name, last_name, email, phone_number, pickup_address_encrypted, preferred_pickup_locker_data, preferred_pickup_locker_location_id, preferred_pickup_locker_provider_slug, preferred_delivery_locker_data, preferred_delivery_locker_location_id, preferred_delivery_locker_provider_slug")
+        .select("id, full_name, name, first_name, last_name, email, phone_number, pickup_address_encrypted, preferred_pickup_locker_data, preferred_pickup_locker_location_id, preferred_pickup_locker_provider_slug, preferred_delivery_locker_data, preferred_delivery_locker_location_id, preferred_delivery_locker_provider_slug, is_away")
         .eq("id", requestData.seller_id)
         .single(),
       findItem(requestData.book_id)
@@ -140,6 +140,13 @@ serve(async (req) => {
       return new Response(
         JSON.stringify({ success: false, error: "Seller not found: " + (sellerResult.error?.message || "Not found") }),
         { status: 404, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    if (seller.is_away) {
+      return new Response(
+        JSON.stringify({ success: false, error: "Seller is currently away and not accepting new orders" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 

@@ -67,19 +67,19 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-8 lg:gap-12">
             {/* Copy */}
-            <div className="order-1">
+            <div className="order-1 text-center lg:text-left">
               <div className="inline-block rounded-full bg-book-200 text-book-800 text-xs sm:text-sm px-3 py-1 mb-4">
                 Books. Uniforms. Everything In Between.
               </div>
               <h1 className="text-3xl sm:text-5xl font-bold text-gray-900 mb-4 leading-tight">
                 Buy Smart. Sell Easy. School Ready.
               </h1>
-              <p className="text-base sm:text-lg text-gray-700 mb-6 sm:mb-8 max-w-xl">
+              <p className="text-base sm:text-lg text-gray-700 mb-6 sm:mb-8 max-w-xl mx-auto lg:mx-0">
                 Textbooks, uniforms, sports equipment, stationery and more —
                 buy affordable secondhand school items or sell what you no longer need,
                 all handled securely through ReBooked Solutions.
               </p>
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start items-center">
                 <Button size="lg" className="bg-book-600 hover:bg-book-700" onClick={() => navigate("/textbooks")}>
                   Browse Listings
                 </Button>

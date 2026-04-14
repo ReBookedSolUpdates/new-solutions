@@ -33,6 +33,7 @@ import {
   CheckCircle,
   Loader2,
   MessageSquare,
+  Heart,
 } from "lucide-react";
 import ChatList from "@/components/chat/ChatList";
 import ChatView from "@/components/chat/ChatView";
@@ -54,6 +55,10 @@ import ProfileEditDialog from "@/components/ProfileEditDialog";
 // Transparency moved to standalone page
 import { UserProfile, AddressData, Address } from "@/types/address";
 import { handleAddressError, getUserFriendlyErrorMessage } from "@/utils/errorDisplayUtils";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
+import { getBooks } from "@/services/book/bookQueries";
+import { getWishlistIds } from "@/services/wishlistService";
 
 // ─── ActivityCommits: must live OUTSIDE Profile to avoid remount glitching ───
 const ActivityCommits: React.FC = () => {
@@ -193,13 +198,31 @@ const Profile = () => {
   const [newEmail, setNewEmail] = useState("");
   const [emailChangeState, setEmailChangeState] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [emailChangeError, setEmailChangeError] = useState("");
+  const [isAway, setIsAway] = useState<boolean>(!!(profile as any)?.is_away);
+  const [savingAway, setSavingAway] = useState(false);
+  const [wishlistItems, setWishlistItems] = useState<Book[]>([]);
   const lastLoadedListingsUserIdRef = useRef<string | null>(null);
   const lastLoadedAddressesUserIdRef = useRef<string | null>(null);
 
   useEffect(() => {
     setPhone((profile as any)?.phone_number || (user?.user_metadata as any)?.phone_number || (user?.user_metadata as any)?.phone || "");
     setProfilePictureUrl((user?.user_metadata as any)?.avatar_url || (profile as any)?.avatar_url || "");
+    setIsAway(!!(profile as any)?.is_away);
   }, [user, profile]);
+
+  useEffect(() => {
+    const loadWishlist = async () => {
+      if (!user?.id) return;
+      try {
+        const [ids, allListings] = await Promise.all([getWishlistIds(user.id), getBooks()]);
+        const idSet = new Set(ids);
+        setWishlistItems(allListings.filter((item) => idSet.has(item.id)));
+      } catch {
+        setWishlistItems([]);
+      }
+    };
+    loadWishlist();
+  }, [user?.id]);
 
   // Handle URL params for deep-linking (e.g., from Order chat buttons)
   useEffect(() => {
@@ -567,7 +590,7 @@ const Profile = () => {
           onValueChange={setActiveTab}
           className="space-y-6"
         >
-          <TabsList className="grid w-full grid-cols-5">
+          <TabsList className="grid w-full grid-cols-6">
             <TabsTrigger value="overview" className="flex items-center gap-2">
               <User className="w-4 h-4" />
               {!isMobile && "Overview"}
@@ -593,6 +616,10 @@ const Profile = () => {
             <TabsTrigger value="addresses" className="flex items-center gap-2">
               <MapPin className="w-4 h-4" />
               {!isMobile && "Addresses"}
+            </TabsTrigger>
+            <TabsTrigger value="wishlist" className="flex items-center gap-2">
+              <Heart className="w-4 h-4" />
+              {!isMobile && "Wishlist"}
             </TabsTrigger>
           </TabsList>
 
@@ -877,7 +904,7 @@ const Profile = () => {
                                 if (user?.id) {
                                   const { error: profileError } = await supabase
                                     .from("profiles")
-                                    .update({ avatar_url: publicUrl })
+                                    .update({ avatar_url: publicUrl, profile_picture_url: publicUrl })
                                     .eq("id", user.id);
 
                                   if (profileError) throw profileError;
@@ -1029,6 +1056,47 @@ const Profile = () => {
                   <h3 className="text-lg font-semibold">Banking Information</h3>
                   <BankingProfileTab />
                 </div>
+
+                <Separator />
+                <div className="flex items-center justify-between border rounded-lg p-4">
+                  <div>
+                    <Label htmlFor="away-mode" className="font-medium">Seller Away Mode</Label>
+                    <p className="text-xs text-gray-500 mt-1">Listings remain visible but buying is disabled while you are away.</p>
+                  </div>
+                  <Switch
+                    id="away-mode"
+                    checked={isAway}
+                    disabled={savingAway}
+                    onCheckedChange={async (checked) => {
+                      if (!user?.id) return;
+                      const previous = isAway;
+                      setIsAway(checked);
+                      setSavingAway(true);
+                      try {
+                        const { error } = await supabase.from("profiles").update({ is_away: checked }).eq("id", user.id);
+                        if (error) throw error;
+                        if (previous && !checked) {
+                          const { data: contacts } = await supabase.rpc("get_seller_wishlist_contacts", { p_seller_id: user.id });
+                          for (const row of contacts || []) {
+                            await supabase.functions.invoke("send-email", {
+                              body: {
+                                to: row.wishlist_email,
+                                subject: `Good news — ${profile?.full_name || profile?.name || "Seller"} is back!`,
+                                html: `<p>Good news — ${profile?.full_name || profile?.name || "Seller"} is back!</p><p>Grab <strong>${row.listing_title}</strong> before someone else does.</p>`,
+                              },
+                            });
+                          }
+                        }
+                        toast.success(checked ? "Away mode enabled" : "Away mode disabled");
+                      } catch {
+                        setIsAway(previous);
+                        toast.error("Failed to update away mode");
+                      } finally {
+                        setSavingAway(false);
+                      }
+                    }}
+                  />
+                </div>
               </CardContent>
             </Card>
           </TabsContent>
@@ -1045,6 +1113,30 @@ const Profile = () => {
                   onSaveAddresses={handleSaveAddresses}
                   isLoading={isLoadingAddress}
                 />
+              </CardContent>
+            </Card>
+          </TabsContent>
+          <TabsContent value="wishlist" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Wishlist</CardTitle>
+              </CardHeader>
+              <CardContent>
+                {wishlistItems.length === 0 ? (
+                  <p className="text-sm text-gray-500">No saved items yet.</p>
+                ) : (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {wishlistItems.map((item) => (
+                      <Card key={item.id} className="overflow-hidden cursor-pointer" onClick={() => navigate(`/books/${item.id}`)}>
+                        <img src={item.imageUrl} alt={item.title} className="w-full h-40 object-cover" />
+                        <CardContent className="p-3">
+                          <p className="font-semibold text-sm line-clamp-1">{item.title}</p>
+                          <p className="text-xs text-gray-500">{item.author}</p>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                )}
               </CardContent>
             </Card>
           </TabsContent>
@@ -1123,7 +1215,10 @@ const Profile = () => {
                       setEmailChangeError("");
                       setEmailChangeState("sending");
                       try {
-                        const { error } = await supabase.auth.updateUser({ email: newEmail.trim() });
+                        const { error } = await supabase.auth.updateUser({
+                          email: newEmail.trim(),
+                          options: { emailRedirectTo: `${window.location.origin}/auth/callback` },
+                        });
                         if (error) throw error;
                         setEmailChangeState("sent");
                       } catch (err: any) {

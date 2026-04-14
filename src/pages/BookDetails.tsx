@@ -14,12 +14,14 @@ import MoreFromCategory from "@/components/book-details/MoreFromCategory";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, AlertTriangle, BookOpen } from "lucide-react";
+import { Heart } from "lucide-react";
 import SEO from "@/components/SEO";
 import { generateBookSEO } from "@/utils/seoUtils";
 import { useBookDetails } from "@/hooks/useBookDetails";
 import { extractBookId } from "@/utils/bookUtils";
 import { toast } from "sonner";
 import { ActivityService } from "@/services/activityService";
+import { toggleWishlistItem, getWishlistIds } from "@/services/wishlistService";
 import { useBookTracking } from "@/hooks/useBookTracking";
 import debugLogger from "@/utils/debugLogger";
 
@@ -29,6 +31,7 @@ const BookDetails = () => {
   const { user, isAdmin } = useAuth();
   const { addToCart } = useCart();
   const [isReportDialogOpen, setIsReportDialogOpen] = useState(false);
+  const [isWishlisted, setIsWishlisted] = useState(false);
 
   // Validate and debug book ID
   useEffect(() => {
@@ -44,6 +47,19 @@ const BookDetails = () => {
   }, [id, navigate]);
 
   const { book, isLoading, error } = useBookDetails(id || "");
+
+  useEffect(() => {
+    const loadWishlistState = async () => {
+      if (!user?.id || !id) return;
+      try {
+        const ids = await getWishlistIds(user.id);
+        setIsWishlisted(ids.includes(id));
+      } catch {
+        setIsWishlisted(false);
+      }
+    };
+    loadWishlistState();
+  }, [user?.id, id]);
 
   const bookSEO = book ? generateBookSEO({
     title: book.title,
@@ -196,6 +212,29 @@ const BookDetails = () => {
     setIsReportDialogOpen(true);
   };
 
+  const handleToggleWishlist = async () => {
+    if (!user?.id || !book?.id) {
+      toast.error("Please log in to use your wishlist");
+      return;
+    }
+    try {
+      const nowWishlisted = await toggleWishlistItem(user.id, book.id);
+      setIsWishlisted(nowWishlisted);
+      toast.success(nowWishlisted ? "Added to wishlist" : "Removed from wishlist");
+      if (nowWishlisted && book.seller?.is_away && user.email) {
+        await supabase.functions.invoke("send-email", {
+          body: {
+            to: user.email,
+            subject: "Seller is away - we'll notify you",
+            html: `<p>This seller is away, but we will notify you when they are back for <strong>${book.title}</strong>.</p>`,
+          },
+        });
+      }
+    } catch {
+      toast.error("Failed to update wishlist");
+    }
+  };
+
   // Loading state
   if (isLoading) {
     return (
@@ -327,7 +366,16 @@ const BookDetails = () => {
             />
 
             {!isOwner && (
-              <div className="text-center">
+              <div className="text-center flex gap-2 justify-center">
+                <Button
+                  variant={isWishlisted ? "default" : "outline"}
+                  size="sm"
+                  onClick={handleToggleWishlist}
+                  className={isWishlisted ? "bg-pink-600 hover:bg-pink-700" : ""}
+                >
+                  <Heart className="h-4 w-4 mr-1" />
+                  {isWishlisted ? "Wishlisted" : "Add to Wishlist"}
+                </Button>
                 <Button
                   variant="outline"
                   size="sm"

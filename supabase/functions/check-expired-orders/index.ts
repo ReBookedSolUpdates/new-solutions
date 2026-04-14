@@ -16,58 +16,62 @@ serve(async (req) => {
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    console.log('[check-expired-orders] Starting cleanup of expired orders...');
+    console.log('[check-expired-orders] Running pending_commit 48h auto-cancel...');
 
-    // 1. Call the stored procedure to cancel expired orders and notify users
-    const { error: rpcError } = await supabase.rpc('auto_cancel_expired_orders');
-
-    if (rpcError) {
-      console.error('[check-expired-orders] RPC Error:', rpcError);
-      throw rpcError;
-    }
-
-    // 2. Additional cleanup: Ensure items associated with cancelled orders are marked as available
-    // We fetch orders that were cancelled in the last 10 minutes (to avoid processing everything)
-    const tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000).toISOString();
-    
-    const { data: cancelledOrders, error: fetchError } = await supabase
+    const expiryCutoff = new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString();
+    const { data: expiredOrders, error: expiredFetchError } = await supabase
       .from('orders')
       .select('id, item_id, item_type')
-      .eq('status', 'cancelled')
-      .gte('cancelled_at', tenMinutesAgo);
+      .eq('status', 'pending_commit')
+      .lt('created_at', expiryCutoff);
 
-    if (fetchError) {
-      console.error('[check-expired-orders] Error fetching cancelled orders:', fetchError);
-    } else if (cancelledOrders && cancelledOrders.length > 0) {
-      console.log(`[check-expired-orders] Found ${cancelledOrders.length} recently cancelled orders to reconcile inventory.`);
-      
-      for (const order of cancelledOrders) {
-        if (!order.item_id || !order.item_type) continue;
-        
-        const tableMap: Record<string, string> = {
-          'book': 'books',
-          'uniform': 'uniforms',
-          'school_supply': 'school_supplies',
-          'stationery': 'school_supplies'
-        };
-        
-        const tableName = tableMap[order.item_type] || order.item_type;
-        
-        console.log(`[check-expired-orders] Reconciling item ${order.item_id} in table ${tableName}`);
-        
-        const { error: updateError } = await supabase
-          .from(tableName)
-          .update({ sold: false })
-          .eq('id', order.item_id);
-          
-        if (updateError) {
-          console.error(`[check-expired-orders] Failed to reconcile item ${order.item_id}:`, updateError);
-        }
+    if (expiredFetchError) {
+      throw expiredFetchError;
+    }
+
+    const expired = expiredOrders || [];
+    for (const order of expired) {
+      try {
+        await fetch(`${supabaseUrl}/functions/v1/cancel-order-with-refund`, {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${supabaseServiceKey}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            order_id: order.id,
+            cancelled_by: "ReBooked Solutions",
+            reason: "Order auto-cancelled: seller did not commit within 48 hours",
+          }),
+        });
+      } catch (cancelError) {
+        console.error(`[check-expired-orders] Failed to auto-cancel order ${order.id}:`, cancelError);
+        continue;
+      }
+
+      if (!order.item_id || !order.item_type) continue;
+      const tableMap: Record<string, string> = {
+        'book': 'books',
+        'uniform': 'uniforms',
+        'school_supply': 'school_supplies',
+        'stationery': 'school_supplies'
+      };
+      const tableName = tableMap[order.item_type] || order.item_type;
+      const { error: relistError } = await supabase
+        .from(tableName)
+        .update({ sold: false, is_available: true })
+        .eq('id', order.item_id);
+      if (relistError) {
+        console.error(`[check-expired-orders] Failed to relist item ${order.item_id}:`, relistError);
       }
     }
 
     return new Response(
-      JSON.stringify({ success: true, message: 'Expired orders processed and inventory reconciled' }),
+      JSON.stringify({
+        success: true,
+        message: 'Expired pending_commit orders processed',
+        processed: expired.length,
+      }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         status: 200 

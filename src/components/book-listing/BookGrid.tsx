@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { BookOpen, School, GraduationCap, MapPin, Clock, Share2 } from "lucide-react";
+import { BookOpen, School, GraduationCap, MapPin, Clock, Share2, Heart } from "lucide-react";
 import { Book } from "@/types/book";
 import { toast } from "sonner";
 import { getSafeErrorMessage } from "@/utils/errorMessageUtils";
 import Pagination from "@/components/ui/pagination";
 import { getOptimizedImageUrl } from "@/utils/imageOptimization";
 import BuyersProtectionDialog from "@/components/BuyersProtectionDialog";
+import { getWishlistIds, toggleWishlistItem } from "@/services/wishlistService";
 
 interface BookGridProps {
   books: Book[];
@@ -33,6 +34,24 @@ const BookGrid = ({
   booksPerPage,
   onPageChange,
 }: BookGridProps) => {
+  const [wishlistIds, setWishlistIds] = useState<Set<string>>(new Set());
+
+  useEffect(() => {
+    const loadWishlist = async () => {
+      if (!currentUserId) {
+        setWishlistIds(new Set());
+        return;
+      }
+      try {
+        const ids = await getWishlistIds(currentUserId);
+        setWishlistIds(new Set(ids));
+      } catch {
+        setWishlistIds(new Set());
+      }
+    };
+    loadWishlist();
+  }, [currentUserId, books.length]);
+
   const handleCommit = async (bookId: string, e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -76,6 +95,29 @@ const BookGrid = ({
 
     toast.success("Item link copied to clipboard!");
   };
+
+  const handleToggleWishlist = async (book: Book, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!currentUserId) {
+      toast.error("Please log in to use your wishlist");
+      return;
+    }
+
+    try {
+      const nowWishlisted = await toggleWishlistItem(currentUserId, book.id);
+      setWishlistIds((prev) => {
+        const next = new Set(prev);
+        if (nowWishlisted) next.add(book.id);
+        else next.delete(book.id);
+        return next;
+      });
+      toast.success(nowWishlisted ? "Added to wishlist" : "Removed from wishlist");
+    } catch {
+      toast.error("Failed to update wishlist");
+    }
+  };
   if (isLoading) {
     return (
       <div className="lg:w-3/4">
@@ -116,6 +158,7 @@ const BookGrid = ({
           const isPendingCommit =
             (book as Book & { status?: string }).status === "pending_commit";
           const isOwner = currentUserId && book.seller?.id === currentUserId;
+          const isSellerAway = !!book.seller?.is_away;
 
           const optimizedSrc = getOptimizedImageUrl(book.imageUrl, {
             width: 400,
@@ -152,6 +195,13 @@ const BookGrid = ({
                   </div>
                 </div>
               )}
+              {isSellerAway && !isUnavailable && (
+                <div className="absolute left-2 top-2 z-10">
+                  <Badge variant="secondary" className="bg-amber-100 text-amber-800 border border-amber-200">
+                    Seller is currently away
+                  </Badge>
+                </div>
+              )}
 
               {isUnavailable ? (
                 <div className="block flex-1">
@@ -185,6 +235,17 @@ const BookGrid = ({
                       title="Share this book"
                     >
                       <Share2 className="h-4 w-4 text-book-600" />
+                    </button>
+                    <button
+                      onClick={(e) => handleToggleWishlist(book, e)}
+                      className="absolute top-2 left-[3.35rem] bg-white/90 hover:bg-white p-2 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                      title="Add to wishlist"
+                    >
+                      <Heart
+                        className={`h-4 w-4 ${
+                          wishlistIds.has(book.id) ? "fill-pink-500 text-pink-500" : "text-book-600"
+                        }`}
+                      />
                     </button>
                     {book.sold && (
                       <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
@@ -298,6 +359,17 @@ const BookGrid = ({
                       title="Share this book"
                     >
                       <Share2 className="h-4 w-4 text-book-600" />
+                    </button>
+                    <button
+                      onClick={(e) => handleToggleWishlist(book, e)}
+                      className="absolute top-2 left-[3.35rem] bg-white/90 hover:bg-white p-2 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                      title="Add to wishlist"
+                    >
+                      <Heart
+                        className={`h-4 w-4 ${
+                          wishlistIds.has(book.id) ? "fill-pink-500 text-pink-500" : "text-book-600"
+                        }`}
+                      />
                     </button>
                     {book.sold && (
                       <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
